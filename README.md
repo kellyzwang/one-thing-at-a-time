@@ -13,9 +13,9 @@ You start by writing down the date, an estimated work time, and *one* task you p
 An analysis tab that visualize your work time interactively.
 
 ### Feature 4: Motivation
-`New Quote` button that displays a new motivational quote for productivity.
-`Add New Quote` button that allows user to add quotes.
-`Manage Quotes` button -- display all quotes in the database with remove buttons.
+- `New Quote` button that displays a new motivational quote for productivity.
+- `Add New Quote` button that allows user to add quotes.
+- `Manage Quotes` button -- display all quotes in the database with remove buttons.
 
 
 ### Notes:
