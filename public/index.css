@@ -1,0 +1,182 @@
+body {
+
+}
+img {
+    border-radius: 50%;
+}
+
+h1, h2, h3 {
+    font-family: 'IM Fell Great Primer SC', serif;
+}
+
+.container {
+    justify-content: center;
+    width: 80%;
+    margin: 1rem;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 4%;
+}
+
+.long-but {
+    background-color: #f5e2e4;
+    border: none;
+    padding: 6px 60px;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
+}
+/* header styles */
+header, header nav, header div {
+    display: flex;
+    align-items: center;
+  }
+
+  header {
+    justify-content: space-between;
+    padding-left: 8%;
+    padding-right: 8%;
+    background-color: #F5F3E7;;
+    height: 6vh;
+  }
+
+  nav > button, header img, header span {
+    margin: 5px;
+  }
+
+  header span {
+    margin-right: 15px;
+    font-family: 'IM Fell Great Primer SC', serif;
+  }
+
+  header img {
+      height: 5vh;
+  }
+
+
+
+/* home */
+#home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+}
+
+#home > h1 {
+    font-size: 350%;
+    font-family: 'IM Fell Great Primer SC', serif;
+}
+
+
+#home > h2 {
+    font-family: 'Inter', sans-serif;
+}
+
+#home > img {
+    height: 17rem;
+}
+
+#rabbit-row {
+    display: flex;
+}
+
+#rabbit-row > img {
+    width: 6.5%;
+    margin: 0.55%;
+}
+/*To-do view*/
+#to-do-view> .container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.flex-to-do {
+    align-items:center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.complete-remove-but {
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.padding-top-bottom {
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Curr-task Page */
+#curr-task-view{
+    font-family: 'Inter', sans-serif;
+}
+
+#curr-task-view label{
+text-align: end;
+padding-right: 2%;
+}
+
+#curr-task-view .input {
+    border-radius: 5px;
+    border: 1px solid black;
+    margin-right: 7%;
+}
+
+#curr-task-view form > div {
+    margin: 3%;
+}
+
+
+
+/* Quote view */
+
+#quote-view input {
+padding: 6px 20%;
+margin-bottom: 10px;
+margin-right: 10px;
+}
+
+#quote-view .long-but {
+    background-color: #eebab2;
+}
+
+/*Curr-Task and Quote*/
+.heading-container {
+    display: flex;
+    align-items: center;
+}
+
+.heading-container img{
+    height: 70%;
+}
+
+h3 {
+    font-size: 200%;
+    margin: 30px;
+}
+
+/*Quote-manage-view*/
+#quote-manage-view button {
+    background-color: #eebab2;
+    border: none;
+    padding: 6px 30px;
+    text-align: center;
+    display: inline-block;
+    font-size: 13px;
+}

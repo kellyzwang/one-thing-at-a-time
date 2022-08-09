@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>One Thing At A Time</title>
+    <link rel='stylesheet' href='index.css'>
+    <script src='index.js'></script>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Coda+Caption&family=IM+Fell+Great+Primer+SC&family=Moon+Dance&family=Neonderthaw&family=Sedgwick+Ave&family=Share+Tech+Mono&display=swap" rel="stylesheet">  </head>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Coda+Caption&family=IM+Fell+Great+Primer+SC&family=Inter:wght@200&family=Moon+Dance&family=Neonderthaw&family=Sedgwick+Ave&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <body>
+    <header>
+      <div>
+        <img src='img/leaf.png' alt='leaf logo'>
+        <span>One Thing At A Time</span>
+        <nav>
+          <button id='home-btn'>Home</button>
+          <button id='yp-do-btn'>To Do</button>
+          <button id='focus-btn'>Focus</button>
+          <button id='analysis-btn'>Analysis</button>
+          <button id='motivation-btn'>Motivation</button>
+        </nav>
+    </div>
+      <button id='login-btn'>Log In</button>
+    </header>
+    <main>
+      <article id='main'>
+        <!-- home view -->
+        <section id='home'>
+          <img src='img/leaf.png' alt='leaf logo'>
+          <h1>One Thing At A Time</h1>
+          <h2>Focus on one thing at a time, get more done, and feel less stressed.</h2>
+        </section>
+
+        <!-- to do view -->
+        <section id='to-do'>
+          <div>
+            <section class="padding-top-bottom">
+                  <div class="container">
+                      <h1>To Do List</h1>
+                      <FormTodo/>
+                      <div>
+                        <Card>
+                          <Card.Body>
+                              <div class="flex-to-do">
+                                  <div >
+                                      <Button class="complete-remove-but" variant="outline-success">Complete</Button>{' '}
+                                      <Button class="complete-remove-but" variant="outline-danger">Remove</Button>
+                                  </div>
+                              </div>
+                          </Card.Body>
+                      </Card>
+                      </div>
+                  </div>
+            </section>
+        </div>
+    </Form>
+    <Form>
+      <Form.Group>
+          <Form.Label>Add To-do:</Form.Label>
+          <Form.Control type="text" class="input"
+              value={toDoTaskEntered} onChange={handleAddNewTaskInput}
+              placeholder="Add a new task!" />
+      </Form.Group>
+      <div class="submit-button">
+          <Button variant="outline-secondary mb-3"
+              type="submit">
+              Add New Task
+          </Button>
+      </div>
+  </Form>
+  <!-- curr-task view -->
+  <section id="curr-task-view">
+  <div class="container">
+    <div class="heading-container">
+      <img src='img/pink-rabbit.png' alt='pink-rabbit logo'>
+      <h3>Current Tasks: </h3>
+    </div>
+    <form>
+      <div>
+        <label for='date'>Today's Date: </label>
+        <input type='date' class='input' name='date' required>
+      </div>
+      <div>
+        <label for='name'>Task Name: </label>
+        <input type='text' class='input' name='name' required>
+        <label for='time'>Estimated time: </label>
+        <input type='time' class="input" name='time' required>
+      </div>
+    </form>
+    <button class = "long-but">Start</button>
+  </div>
+    <div class="container">
+      <div class="heading-container">
+        <img src='img/pink-rabbit.png' alt='pink-rabbit logo'>
+        <h3>History: </h3>
+      </div>
+      <div>
+        <label for='date'>Today's Date: </label>
+        <input type='date' class='input' name='date' required>
+      </div>
+    </div>
+  </section>
+  <!-- analysis view -->
+  <!-- quote view -->
+  <section id="quote-view">
+    <div class="container">
+      <div class="heading-container">
+        <img src='img/red-rabbit.png' alt='red-rabbit logo'>
+        <h3>Quote of the day: </h3>
+      </div>
+      <p>Everything is hard</p>
+      <button class = "long-but">New Quote</button>
+    </div>
+    <div class="container">
+      <input type='text' id='quote-input' placeholder="Type a new quote" required>
+      <button class = "long-but">Add New Quote</button>
+    </div>
+    <div class="container">
+      <h3>View your added quotes or remove quote</h3>
+      <button class = "long-but">Manage New Quote</button>
+    </div>
+    </section>
+    <!-- quote-manage view -->
+    <section id="quote-manage-view">
+      <div class="container">
+        <div class="heading-container">
+          <img src='img/red-rabbit.png' alt='red-rabbit logo'>
+          <h3>All Added Quotes</h3>
+          </div>
+        <div class="container">
+        <span>"Hi Kelly Hi Vydia"</span>
+        <button>Remove</button>
+        </div>
+      </div>
+      <div id="rabbit-row">
+        <img src='img/light-brown-rabbit.png' alt='light-brown-rabbit logo'>
+        <img src='img/green-rabbit.png' alt='green-rabbit logo'>
+        <img src='img/dark-brown-rabbit.png' alt='dark-brown-rabbit logo'>
+        <img src='img/white-rabbit.png' alt='white-rabbit logo'>
+        <img src='img/pink-rabbit.png' alt='pink-rabbit logo'>
+        <img src='img/red-rabbit.png' alt='red-rabbit logo'>
+        <img src='img/light-brown-rabbit.png' alt='light-brown-rabbit logo'>
+        <img src='img/green-rabbit.png' alt='green-rabbit logo'>
+        <img src='img/dark-brown-rabbit.png' alt='dark-brown-rabbit logo'>
+        <img src='img/white-rabbit.png' alt='white-rabbit logo'>
+        <img src='img/pink-rabbit.png' alt='pink-rabbit logo'>
+        <img src='img/red-rabbit.png' alt='red-rabbit logo'>
+      </div>
+        </article>
+    </main>
+  </body>
+</html>
