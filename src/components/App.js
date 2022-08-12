@@ -6,6 +6,7 @@ import { Curr_Task } from './Curr_Task.js';
 import { Analysis } from './Analysis.js';
 import { Quote } from './Quote.js';
 import { QuoteManage } from './QuoteManage.js'
+import { Motivation } from './Motivation.js'
 
 import { Routes, Route } from 'react-router-dom';
 
