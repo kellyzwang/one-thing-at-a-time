@@ -24,7 +24,7 @@ function App(props) {
                 <Route path="/" element={<Home />} />
                 <Route path="analysis" element={<Analysis />} />
                 <Route path="curr-task" element={<Curr_Task />} />
-                <Route path="quote" element={<Quote />} />
+                <Route path="motivation" element={<Motivation />} />
                 <Route path="quote-manage" element={<QuoteManage />} />
                 <Route path="todo" element={<Todo />} />
                 <Route path='*' element={<Home />} />

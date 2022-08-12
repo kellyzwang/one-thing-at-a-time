@@ -41,6 +41,9 @@ h1, h2, h3 {
 .nav-link {
     text-align: center;
 }
+nav span {
+    font-family: 'IM Fell Great Primer SC', serif;
+}
 
 /* home */
 #home {
@@ -132,6 +135,9 @@ padding-right: 2%;
 
 
 /* Quote view */
+#quote-view {
+    margin-top: 130px;
+}
 
 #quote-view input {
 padding: 6px 20%;
@@ -141,6 +147,15 @@ margin-right: 10px;
 
 #quote-view .long-but {
     background-color: #eebab2;
+    border-color: #eebab2;
+    color: black;
+}
+.success-message {
+    color: #4F8A10;
+}
+
+.error-message {
+    color: red;
 }
 
 /*Curr-Task and Quote*/
@@ -159,11 +174,7 @@ h3 {
 }
 
 /*Quote-manage-view*/
-#quote-manage-view button {
-    background-color: #eebab2;
-    border: none;
-    padding: 6px 30px;
-    text-align: center;
-    display: inline-block;
-    font-size: 13px;
+#quote-manage-view {
+    margin-top: 130px;
 }
+
