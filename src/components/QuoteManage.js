@@ -14,8 +14,6 @@ export function QuoteManage() {
     const db = getDatabase();
     const allAddedQuoteDataRef = ref(db, "allAddedQuoteData"); // refers to "allAddedQuoteData" in the database
 
-    // onValue() returns how to turn it back off
-    //returns a function that will "unregister" (turn off) the listener
     const unregisterFunction = onValue(allAddedQuoteDataRef, (snapshot) => {
       const newVal = snapshot.val();
       setFirebaseQuoteData(newVal); // keep a copy of firebase allAddedQuoteData
@@ -37,7 +35,7 @@ export function QuoteManage() {
     function cleanup() {
       unregisterFunction(); //call the unregister function
     }
-    return cleanup; //effect hook callback returns the cleanup function
+    return cleanup;
   }, [])
 
 
@@ -57,7 +55,6 @@ export function QuoteManage() {
             <h3>All Added Quotes</h3>
 
           </div>
-          <div className="container">
 
             <table className="table table-hover table-bordered">
               <thead>
@@ -73,7 +70,6 @@ export function QuoteManage() {
             </table>
 
           </div>
-        </div>
       </section>
     </div>
   )
@@ -87,7 +83,7 @@ function QuoteDataRow({ quote_item, index, firebaseQuoteData }) {
     const buttonValueOftheRow = event.target.value;
 
     const db = getDatabase();
-
+    
     if (firebaseQuoteData !== null) {
       const firebaseQuoteDataNew = []
       for (const [key, value] of Object.entries(firebaseQuoteData)) {
@@ -100,24 +96,21 @@ function QuoteDataRow({ quote_item, index, firebaseQuoteData }) {
         firebaseQuoteDataNew.push(obj);
       }
 
-      for (let i = 0; i < firebaseQuoteDataNew.length; i++) {
-        if (buttonValueOftheRow === firebaseQuoteDataNew[i].Quote + index) {
-          const delUniqueKey = firebaseQuoteDataNew[i].uniqueKey;
-          const delRefString = "allAddedQuoteData/" + delUniqueKey;
-          const delRef = ref(db, delRefString);
-          firebaseSet(delRef, null);
-        }
-      }
+
+      const delUniqueKey = firebaseQuoteDataNew[buttonValueOftheRow].uniqueKey;
+      const delRefString = "allAddedQuoteData/" + delUniqueKey;
+      const delRef = ref(db, delRefString);
+      firebaseSet(delRef, null);
     }
   }
-  const buttonValue = quote_item.Quote + index;
+
+
   return (
     <tr>
       <td>{index}</td>
       <td>{quote_item.Quote}</td>
       <td>
-
-        <Button outline color="danger" value={buttonValue} onClick={handleRemoveButton}>Remove</Button>
+        <Button outline color="danger" value={index} onClick={handleRemoveButton}>Remove</Button>
       </td>
     </tr>
   );
