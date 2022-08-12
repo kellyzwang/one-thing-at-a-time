@@ -173,6 +173,11 @@ h3 {
     margin: 30px;
 }
 
+/* Motivation page */
+.quotedisplay {
+    margin-top: 1.5em;
+}
+
 /*Quote-manage-view*/
 #quote-manage-view {
     margin-top: 130px;

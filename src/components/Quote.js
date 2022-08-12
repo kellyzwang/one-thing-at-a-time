@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 
 
-export function Quote() {
+export function Quote(props) {
   // state variable to track quote entered
   const [quoteEntered, setQuoteEntered] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -53,6 +53,22 @@ export function Quote() {
   }
 
 
+
+  const [displayedQuote, setDisplayedQuote] = useState("Click the 'New Quote' button below to see quote of the day! :)");
+
+    const handleNewQuoteSubmit = (event) => {
+        event.preventDefault();
+
+        if (props.quoteData === null || props.quoteData === []) {
+            setDisplayedQuote("Oh no! There's no quotes in the database, try adding a new quote you like! :)");
+        }
+        const randomInt = Math.floor(Math.random() * props.quoteData.length);
+        const randomQuote = "\"" + props.quoteData[randomInt].Quote + "\"" ;
+        setDisplayedQuote(randomQuote);
+    }
+
+
+
   return (
     <div>
       <section id="quote-view">
@@ -61,8 +77,8 @@ export function Quote() {
             <img src='img/red-rabbit.png' alt='red-rabbit logo'></img>
             <h3>Quote of the day: </h3>
           </div>
-          <p>Everything is hard</p>
-          <Button color="secondary" size="sm" className="long-but">New Quote</Button>
+          <p className="quotedisplay">{displayedQuote}</p>
+          <Button color="secondary" size="sm" className="long-but" onClick={handleNewQuoteSubmit}>New Quote</Button>
         </div>
         <div className="container">
           <input type='text' id='quote-input' placeholder="Type a new quote" required
