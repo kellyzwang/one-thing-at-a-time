@@ -83,15 +83,15 @@ function QuoteDataRow({ quote_item, index, firebaseQuoteData }) {
     const buttonValueOftheRow = event.target.value;
 
     const db = getDatabase();
-    
+
     if (firebaseQuoteData !== null) {
       const firebaseQuoteDataNew = []
       for (const [key, value] of Object.entries(firebaseQuoteData)) {
         let obj = { uniqueKey: key };
         for (const [k, v] of Object.entries(value)) {
-          if (k == "Quote") {
+          if (k === "Quote") {
             obj.Quote = v;
-          } 
+          }
         }
         firebaseQuoteDataNew.push(obj);
       }
