@@ -115,15 +115,15 @@ useEffect(() => {
       </div>
       <form>
         <div>
-          <label for='date'>Today's Date: </label>
+          <label htmlFor='date'>Today's Date: </label>
           <input type='date' className='input' name='date' required
           value={dateEntered} onChange={handleDateChange}/>
         </div>
         <div>
-          <label for='name'>Task Name: </label>
+          <label htmlFor='name'>Task Name: </label>
           <input type='text' className='input' name='name' required
           value={taskNameEntered} onChange={handleTaskNameChange}/>
-          <label for='time'>Estimated time: </label>
+          <label htmlFor='time'>Estimated time: </label>
           <input type='time' className="input" name='time' required
           value={estTimeEntered} onChange={handleEstTimeChange} />
         </div>
@@ -141,7 +141,7 @@ useEffect(() => {
           <h3>History: </h3>
         </div>
         <div>
-          <label for='date'>Today's Date: </label>
+          <label htmlFor='date'>Today's Date: </label>
           <input type='date' className='input' name='date' required />
         </div>
       </div>

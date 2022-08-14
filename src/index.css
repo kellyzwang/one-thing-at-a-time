@@ -35,8 +35,9 @@ h1, h2, h3 {
     margin-left: 1em;
     margin-right: 0.5em;
 }
-.login-margin {
+.signin-margin {
     margin-right: 1em;
+    white-space: nowrap;
 }
 .nav-link {
     text-align: center;
@@ -45,12 +46,19 @@ nav span {
     font-family: 'IM Fell Great Primer SC', serif;
 }
 
+.signout-margin {
+    margin-right: 1em;
+    white-space: nowrap;
+    padding: 8px;
+}
+
 /* home */
 #home {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 2%;
+    margin-top: 130px;
 }
 
 #home > h1 {
@@ -69,12 +77,14 @@ nav span {
 
 #rabbit-row {
     display: flex;
+    background-repeat: repeat-y;
 }
 
 #rabbit-row > img {
     width: 6.5%;
     margin: 0.55%;
 }
+
 /*To-do view*/
 #to-do-view> .container {
     align-items: center;
@@ -188,3 +198,12 @@ table {
     margin-top: 2em;
 }
 
+
+/*Sign in page*/
+.signin-view {
+    margin-top: 130px;
+}
+.welcome-signin {
+    text-align: center;
+    padding-bottom: 2em;
+}
