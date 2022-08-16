@@ -3,23 +3,22 @@ import { Button } from 'reactstrap';
 import { getDatabase, ref, set as firebaseSet, onValue } from 'firebase/database';
 
 
-export function QuoteManage() {
+export function QuoteManage(props) {
   const [quoteData, setQuoteData] = useState([]);
   const [firebaseQuoteData, setFirebaseQuoteData] = useState([]);
 
   useEffect(() => {
     // what to do FIRST TIME the component loads
 
-    // hook up listener for when a value changes
     const db = getDatabase();
-    const allAddedQuoteDataRef = ref(db, "allAddedQuoteData"); // refers to "allAddedQuoteData" in the database
+    // refers to "allAddedQuoteData" in the database for current user
+    const allAddedQuoteDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allAddedQuoteData"); 
 
     const unregisterFunction = onValue(allAddedQuoteDataRef, (snapshot) => {
       const newVal = snapshot.val();
       setFirebaseQuoteData(newVal); // keep a copy of firebase allAddedQuoteData
 
 
-      // need to convert obj into array in order to setLabelArray() and setChartData()
       if (newVal !== null) {
         const keys = Object.keys(newVal);
         const newObjArray = keys.map((keyString) => {
@@ -42,7 +41,7 @@ export function QuoteManage() {
   // convert data into rows
   const rows = quoteData.map((quote_item, index) => {
     return <QuoteDataRow key={index} quote_item={quote_item} index={index}
-      firebaseQuoteData={firebaseQuoteData} />
+      firebaseQuoteData={firebaseQuoteData} currentUser={props.currentUser}/>
   });
 
 
@@ -76,7 +75,7 @@ export function QuoteManage() {
 }
 
 
-function QuoteDataRow({ quote_item, index, firebaseQuoteData }) {
+function QuoteDataRow({ quote_item, index, firebaseQuoteData, currentUser }) {
 
   const handleRemoveButton = (event) => {
     event.preventDefault();
@@ -98,7 +97,7 @@ function QuoteDataRow({ quote_item, index, firebaseQuoteData }) {
 
 
       const delUniqueKey = firebaseQuoteDataNew[buttonValueOftheRow].uniqueKey;
-      const delRefString = "allAddedQuoteData/" + delUniqueKey;
+      const delRefString = "allUserData/" + currentUser.uid + "/allAddedQuoteData/" + delUniqueKey;
       const delRef = ref(db, delRefString);
       firebaseSet(delRef, null);
     }

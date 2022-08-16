@@ -38,7 +38,7 @@ export function Quote(props) {
     const newQuoteData = {
       Quote: quoteEntered
     }
-    const allAddedQuoteData = ref(db, "allAddedQuoteData");
+    const allAddedQuoteData = ref(db, "allUserData/" + props.currentUser.uid + "/allAddedQuoteData");
     firebasePush(allAddedQuoteData, newQuoteData)
       .then(() => {
         setStatus({ type: 'success' });

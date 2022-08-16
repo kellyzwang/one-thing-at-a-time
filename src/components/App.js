@@ -4,7 +4,6 @@ import { Home } from './Home.js';
 import { NavBar } from './NavBar.js';
 import { Curr_Task } from './Curr_Task.js';
 import { Analysis } from './Analysis.js';
-import { Quote } from './Quote.js';
 import { QuoteManage } from './QuoteManage.js'
 import { Motivation } from './Motivation.js'
 import { SignIn } from './SignIn.js'
@@ -27,7 +26,6 @@ function App(props) {
 
         onAuthStateChanged(auth, (firebaseUser) => {
             if (firebaseUser) { //is defined, so "logged in"
-                console.log(firebaseUser)
 
                 //add in the keys for the terms we want to use
                 firebaseUser.userId = firebaseUser.uid;
@@ -40,6 +38,9 @@ function App(props) {
         });
     }, []) //array is list of variables that will cause this to rerun if changed
 
+    console.log("printing from App.js;", 
+                "currentUser is:", currentUser,
+                "uid:", currentUser.uid)
 
     const loginUser = (userObject) => {
         //can do more checking here if we want
@@ -60,8 +61,8 @@ function App(props) {
 
                         <Route path="analysis" element={<Analysis />} />
                         <Route path="curr-task" element={<Curr_Task />} />
-                        <Route path="motivation" element={<Motivation />} />
-                        <Route path="quote-manage" element={<QuoteManage />} />
+                        <Route path="motivation" element={<Motivation currentUser={currentUser}/>} />
+                        <Route path="quote-manage" element={<QuoteManage currentUser={currentUser}/>} />
                         <Route path="to-do" element={<Todo />} />
 
                     </Route>
