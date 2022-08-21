@@ -23,7 +23,7 @@ export function Curr_Task(props) {
     // what to do FIRST TIME the component loads
     // hook up listener for when a value changes
     const db = getDatabase();
-    const allTasksDataRef = ref(db, "allTasksData"); // refers to "allAddedQuoteData" in the database
+    const allTasksDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allTasksData");
 
     const unregisterFunction = onValue(allTasksDataRef, (snapshot) => {
       const newVal = snapshot.val();
@@ -42,7 +42,6 @@ export function Curr_Task(props) {
     if (timerStarted) {
       timerId = setInterval(function () {
         setSecond(second => second + 1);
-        console.log(second);
         if (second == 60) {
           setMinute(minute => minute + 1);
           setSecond(0);
@@ -120,8 +119,6 @@ export function Curr_Task(props) {
 
   const [status, setStatus] = useState(undefined);
 
-
-
   const handleCurrTaskSubmit = (event) => {
     event.preventDefault();
     const db = getDatabase();
@@ -131,7 +128,7 @@ export function Curr_Task(props) {
       Est_Time: estTimeEntered,
       Actual_time: hour + ":" + minute + ":" + second
     }
-    const allTasksData = ref(db, "allTasksData");
+    const allTasksData = ref(db, "allUserData/" + props.currentUser.uid + "/allTasksData");
     firebasePush(allTasksData, newTaskData)
       .then(() => {
         setStatus({ type: 'success' });
@@ -161,12 +158,14 @@ export function Curr_Task(props) {
   };
 
   const rows = tasksData.map((task, index) => {
-    return (
-      <tr key={index}>
-      <td>{task.name}</td>
-      <td>{task.Est_Time}</td>
-      <td>{task.Actual_time}</td>
-    </tr>);
+    if(!selectedDate || task.date == selectedDate) {
+      return (
+        <tr key={index}>
+        <td>{task.name}</td>
+        <td>{task.Est_Time}</td>
+        <td>{task.Actual_time}</td>
+      </tr>);
+    }
   });
 
 
