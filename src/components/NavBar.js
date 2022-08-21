@@ -13,7 +13,6 @@ export function NavBar(props) {
     const currentUserName = props.currentUser.displayName;
 
     const handleSignOut = (event) => {
-        //console.log("signing out");
         signOut(getAuth());
       }  
     
@@ -53,7 +52,6 @@ export function NavBar(props) {
                             }
                             {currentUser && <>
                                     <Nav.Link to="/profile" className="signin-margin">Hi {currentUserName}!</Nav.Link>
-                                    {/*<Button size="sm" className="signout-button signin-margin" onClick={handleSignOut}>Sign Out</Button>*/}
                                     <Nav.Link as={Link} to="/home" className="signin-margin signout-margin" onClick={handleSignOut}>Sign Out</Nav.Link>
                             </>
                             }
