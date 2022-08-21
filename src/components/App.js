@@ -38,9 +38,9 @@ function App(props) {
         });
     }, []) //array is list of variables that will cause this to rerun if changed
 
-    console.log("printing from App.js;", 
-                "currentUser is:", currentUser,
-                "uid:", currentUser.uid)
+    // console.log("printing from App.js;",
+    //             "currentUser is:", currentUser,
+    //             "uid:", currentUser.uid)
 
     const loginUser = (userObject) => {
         //can do more checking here if we want
@@ -60,7 +60,7 @@ function App(props) {
                     <Route element={<ProtectedPage currentUser={currentUser} />}>
 
                         <Route path="analysis" element={<Analysis />} />
-                        <Route path="curr-task" element={<Curr_Task />} />
+                        <Route path="curr-task" element={<Curr_Task currentUser={currentUser}/>} />
                         <Route path="motivation" element={<Motivation currentUser={currentUser}/>} />
                         <Route path="quote-manage" element={<QuoteManage currentUser={currentUser}/>} />
                         <Route path="to-do" element={<Todo currentUser={currentUser}/>} />
@@ -98,6 +98,6 @@ function ProtectedPage(props) {
       return <Outlet />
     }
   }
-  
+
 
 export default App;
