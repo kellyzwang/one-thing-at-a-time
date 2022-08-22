@@ -35,7 +35,7 @@ export function QuoteManage(props) {
       unregisterFunction(); //call the unregister function
     }
     return cleanup;
-  }, [])
+  }, [props.currentUser.uid])
 
 
   // convert data into rows
@@ -77,6 +77,7 @@ export function QuoteManage(props) {
 
 function QuoteDataRow({ quote_item, index, firebaseQuoteData, currentUser }) {
 
+  console.log(firebaseQuoteData)
   const handleRemoveButton = (event) => {
     event.preventDefault();
     const buttonValueOftheRow = event.target.value;

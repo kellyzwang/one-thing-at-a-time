@@ -64,7 +64,7 @@ function App(props) {
                         <Route path="curr-task" element={<Curr_Task currentUser={currentUser}/>} />
                         <Route path="motivation" element={<Motivation currentUser={currentUser}/>} />
                         <Route path="quote-manage" element={<QuoteManage currentUser={currentUser}/>} />
-                        <Route path="to-do" element={<Todo />} />
+                        <Route path="to-do" element={<Todo currentUser={currentUser}/>} />
 
                     </Route>
 
