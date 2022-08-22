@@ -1,6 +1,5 @@
 import { getDatabase, ref, onValue, push as firebasePush } from 'firebase/database';
 import { useState, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
 
 export function Curr_Task(props) {
   // state variable to track quote entered
@@ -152,9 +151,6 @@ export function Curr_Task(props) {
 
   const handleSelectedDate = event => {
     setSelectedDate(event.target.value);
-  };
-  const isRightDate = (task) => {
-    return task.date == selectedDate;
   };
 
   const rows = tasksData.map((task, index) => {

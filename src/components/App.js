@@ -19,6 +19,7 @@ function App(props) {
     const [currentUser, setCurrentUser] = useState(nullUser);
     const navigateTo = useNavigate(); //for redirecting
 
+
     //effect to run when the component first loads
     useEffect(() => {
 
@@ -59,7 +60,7 @@ function App(props) {
 
                     <Route element={<ProtectedPage currentUser={currentUser} />}>
 
-                        <Route path="analysis" element={<Analysis />} />
+                        <Route path="analysis" element={<Analysis currentUser={currentUser}/>} />
                         <Route path="curr-task" element={<Curr_Task currentUser={currentUser}/>} />
                         <Route path="motivation" element={<Motivation currentUser={currentUser}/>} />
                         <Route path="quote-manage" element={<QuoteManage currentUser={currentUser}/>} />

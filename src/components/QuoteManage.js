@@ -12,7 +12,7 @@ export function QuoteManage(props) {
 
     const db = getDatabase();
     // refers to "allAddedQuoteData" in the database for current user
-    const allAddedQuoteDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allAddedQuoteData"); 
+    const allAddedQuoteDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allAddedQuoteData");
 
     const unregisterFunction = onValue(allAddedQuoteDataRef, (snapshot) => {
       const newVal = snapshot.val();
