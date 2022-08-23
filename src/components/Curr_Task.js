@@ -1,13 +1,35 @@
 import { getDatabase, ref, onValue, push as firebasePush } from 'firebase/database';
 import { useState, useEffect } from 'react';
+import DropdownList from "react-widgets/DropdownList";
+import "react-widgets/styles.css";
+
 
 export function Curr_Task(props) {
-  // state variable to track quote entered
-  const [dateEntered, setDateEntered] = useState("");
+
+  const current = new Date();
+
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  const todaysDate = formatDate(current);
+
+  // state variable to track data entered
+  const [dateEntered, setDateEntered] = useState(todaysDate);
   const [taskNameEntered, setTaskNameEntered] = useState("");
   const [estTimeEntered, setEstTimeEntered] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [dateEmpty, setDateEmpty] = useState(true);
+  const [dateEmpty, setDateEmpty] = useState(false);
   const [estTimeEmpty, setEstTimeEmpty] = useState(true);
   const [taskNameEmpty, setTaskNameEmpty] = useState(true);
   const [timerStarted, setTimerStarted] = useState(false);
@@ -31,10 +53,10 @@ export function Curr_Task(props) {
       if (newVal !== null) {
         const keys = Object.keys(newVal);
         const newObjArray = keys.map((keyString) => {
-            return newVal[keyString];
+          return newVal[keyString];
         })
         setTasksData(newObjArray);
-    }
+      }
     })
 
     let timerId = null;
@@ -66,7 +88,7 @@ export function Curr_Task(props) {
 
     // disable button and display validation error message if enteredQuoteValue is empty
     if (dateValue == null || dateValue === "" || dateValue === undefined) {
-      event.target.setCustomValidity("Today's date field cannot be empty.");
+      event.target.setCustomValidity("Date field cannot be empty.");
       setDateEmpty(true);
     } else {
       event.target.setCustomValidity("");
@@ -79,7 +101,7 @@ export function Curr_Task(props) {
   const handleTaskNameChange = (event) => {
     const taskNameValue = event.target.value;
 
-    // disable button and display validation error message if enteredQuoteValue is empty
+    // disable button and display validation error message if task name is empty
     if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
       event.target.setCustomValidity("Task Name field cannot be empty.");
       setTaskNameEmpty(true);
@@ -92,17 +114,20 @@ export function Curr_Task(props) {
     setTaskNameEntered(taskNameValue);
   }
   const handleEstTimeChange = (event) => {
-    const estTimeValue = event.target.value;
+    const estTimeValue = event;
 
-    // disable button and display validation error message if enteredQuoteValue is empty
+    // disable button and display validation error message 
     if (estTimeValue == null || estTimeValue === "" || estTimeValue === undefined) {
-      event.target.setCustomValidity("Today's date field cannot be empty.");
+      //event.target.setCustomValidity("Estimated time field cannot be empty.");
+      setErrorMessage("Estimated time field cannot be empty.");
+
       setEstTimeEmpty(true);
     } else {
-      event.target.setCustomValidity("");
+      //event.target.setCustomValidity("");
+      setErrorMessage("");
       setEstTimeEmpty(false);
     }
-    setErrorMessage(event.target.validationMessage);
+    //setErrorMessage(event.target.validationMessage);
 
     setEstTimeEntered(estTimeValue);
   }
@@ -154,15 +179,21 @@ export function Curr_Task(props) {
   };
 
   const rows = tasksData.map((task, index) => {
-    if(!selectedDate || task.date == selectedDate) {
+    if (!selectedDate || task.date == selectedDate) {
       return (
         <tr key={index}>
-        <td>{task.name}</td>
-        <td>{task.Est_Time}</td>
-        <td>{task.Actual_time}</td>
-      </tr>);
+          <td>{task.name}</td>
+          <td>{task.Est_Time}</td>
+          <td>{task.Actual_time}</td>
+        </tr>);
     }
   });
+
+  const dropDownChange = (event) => {
+
+  }
+
+  //console.log(dateEmpty ,estTimeEmpty ,taskNameEmpty, timerStarted)
 
 
   return (
@@ -175,7 +206,7 @@ export function Curr_Task(props) {
           </div>
           <form>
             <div>
-              <label htmlFor='date'>Today's Date: </label>
+              <label htmlFor='date'>Date: </label>
               <input type='date' className='input' name='date' required
                 value={dateEntered} onChange={handleDateChange} />
             </div>
@@ -183,9 +214,30 @@ export function Curr_Task(props) {
               <label htmlFor='name'>Task Name: </label>
               <input type='text' className='input' name='name' required
                 value={taskNameEntered} onChange={handleTaskNameChange} />
-              <label htmlFor='time'>Estimated time: </label>
-              <input type='time' className="input" name='time' required
-                value={estTimeEntered} onChange={handleEstTimeChange} />
+
+
+              <select onChange={dropDownChange}>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+                <option value="custom">Type Your own</option>
+              </select>
+
+            </div>
+            <div>
+              <label htmlFor='time'>Estimated work time (how much time you plan to spend): </label>
+
+              <DropdownList
+                data={["0:30:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0", 
+                        "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0", 
+                        "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0", 
+                        "8:00:0"]}
+                value={estTimeEntered}
+                placeholder={"hh:mm:ss"}
+                onSelect={handleEstTimeChange} 
+              />
+              {/*<input type='time' className="input" name='time' required
+                value={estTimeEntered} onChange={handleEstTimeChange} />*/}
             </div>
           </form>
           <div className="error-message">{errorMessage}</div>
@@ -204,21 +256,21 @@ export function Curr_Task(props) {
             <h3>History: </h3>
           </div>
           <div>
-            <label htmlFor='date'>Today's Date: </label>
+            <label htmlFor='date'>Date: </label>
             <input type='date' className='input' name='date' onChange={handleSelectedDate} required />
             <div>
-            <table className="table table-hover table-bordered">
-              <thead>
-                <tr>
-                  <th>Task Name</th>
-                  <th>Estimated Time</th>
-                  <th>Actual Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows}
-              </tbody>
-            </table>
+              <table className="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th>Task Name</th>
+                    <th>Estimated Time</th>
+                    <th>Actual Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
