@@ -6,42 +6,12 @@ import { ToDoList } from './ToDoList';
 
 export function Todo(props) {
 
-  const [ToDoData, setToDoData] = useState([{}]);
   const [toDoTaskEntered, setToDoTaskEntered] = useState("");
   const [status, setStatus] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
-
-  // get toDo data from firebase!
-  useEffect(() => {
-
-    const db = getDatabase();
-
-    // refers to "allAddedToDoData" for current user in the database
-    const allAddedToDoDataRef = ref(db, "allUserData/" + [props.currentUser.uid] + "/allAddedToDoData");
-
-    const unregisterFunction = onValue(allAddedToDoDataRef, (snapshot) => {
-      const newVal = snapshot.val();
-
-      if (newVal !== null) {
-        const keys = Object.keys(newVal);
-        const newObjArray = keys.map((keyString) => {
-          return newVal[keyString];
-        })
-        setToDoData(newObjArray);
-      } else {
-        setToDoData([]);
-      }
-    })
-
-    //cleanup function for when component is removed
-    function cleanup() {
-      unregisterFunction(); //call the unregister function
-    }
-    return cleanup; //effect hook callback returns the cleanup function
-  }, [props.currentUser.uid])
-
+  
 
   const current = new Date();
   const longMonth = current.toLocaleString('en-us', { month: 'long' });
@@ -95,7 +65,7 @@ export function Todo(props) {
         <div>
 
           <h1 className="dateDisplayText">Today is <strong className="dateDisplay">{dateDisplay}</strong>.</h1>
-          <ToDoList ToDoData={ToDoData} currentUser={props.currentUser}/>
+          <ToDoList ToDoData={props.ToDoData} currentUser={props.currentUser}/>
 
         </div>
 

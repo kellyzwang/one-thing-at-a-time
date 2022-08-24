@@ -44,8 +44,6 @@ export function Curr_Task(props) {
 
 
   useEffect(() => {
-    // what to do FIRST TIME the component loads
-    // hook up listener for when a value changes
     const db = getDatabase();
     const allTasksDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allTasksData");
 
@@ -79,9 +77,8 @@ export function Curr_Task(props) {
       clearInterval(timerId);
     }
 
-    //cleanup function for when component is removed
     function cleanup() {
-      unregisterFunction(); //call the unregister function
+      unregisterFunction(); 
     }
     return () => clearInterval(timerId);
   }, [timerStarted, second, minute, hour])
@@ -101,21 +98,7 @@ export function Curr_Task(props) {
 
     setDateEntered(dateValue);
   }
-  const handleTaskNameChange = (event) => {
-    const taskNameValue = event.target.value;
 
-    // disable button and display validation error message if task name is empty
-    if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
-      event.target.setCustomValidity("Task Name field cannot be empty.");
-      setTaskNameEmpty(true);
-    } else {
-      event.target.setCustomValidity("");
-      setTaskNameEmpty(false);
-    }
-    setErrorMessage(event.target.validationMessage);
-
-    setTaskNameEntered(taskNameValue);
-  }
   const handleEstTimeChange = (event) => {
     const estTimeValue = event;
 
@@ -193,16 +176,31 @@ export function Curr_Task(props) {
     }
   });
 
-  console.log("tasksData", tasksData)
 
- // convert data into rows
- //const rows = quoteData.map((quote_item, index) => {
- // return <QuoteDataRow key={index} quote_item={quote_item} index={index}
-  //  firebaseQuoteData={firebaseQuoteData} currentUser={props.currentUser}/>
- // });
+  //// Task Name input box and handle change ////
+  const currentToDoListOptions = props.ToDoData.map((task, index) => {
+      return (
+        <option key={index} value={task.ToDoTask}>{task.ToDoTask}</option>
+        );
+    
+  });
 
-  const dropDownChange = (event) => {
+  const handleTaskNameChange = (event) => {
+    const taskNameValue = event.target.value;
 
+    // disable button and display validation error message if task name is empty
+    if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
+      event.target.setCustomValidity("Task Name field cannot be empty.");
+      setTaskNameEmpty(true);
+    } else {
+      event.target.setCustomValidity("");
+      setTaskNameEmpty(false);
+    }
+
+    console.log(taskNameValue)
+    setErrorMessage(event.target.validationMessage);
+
+    setTaskNameEntered(taskNameValue);
   }
 
   //console.log(dateEmpty ,estTimeEmpty ,taskNameEmpty, timerStarted)
@@ -224,16 +222,18 @@ export function Curr_Task(props) {
             </div>
             <div>
               <label htmlFor='name'>Task Name: </label>
-              <input type='text' className='input' name='name' required
-                value={taskNameEntered} onChange={handleTaskNameChange} />
 
 
-              <select onChange={dropDownChange}>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-                <option value="custom">Type Your own</option>
+              <select onChange={handleTaskNameChange}>
+                <option value="">Select a Task to work on</option>
+                {currentToDoListOptions}
               </select>
+
+              <span> or type a new task: </span>
+
+              <input type='text' className='input' name='name' required
+                placeholder='Type in the task name you&#39re about to work on'
+                value={taskNameEntered} onChange={handleTaskNameChange} />
 
             </div>
             <div>
@@ -292,7 +292,7 @@ export function Curr_Task(props) {
   )
 }
 
-function TaskHistoryDataRow({ name, task, index, firebaseTaskData, currentUser }) {
+function TaskHistoryDataRow({ task, index, firebaseTaskData, currentUser }) {
 
   const handleRemoveButton = (event) => {
     event.preventDefault();
@@ -315,9 +315,6 @@ function TaskHistoryDataRow({ name, task, index, firebaseTaskData, currentUser }
         }
         firebaseTaskDataNew.push(obj);
       }
-
-      console.log(firebaseTaskDataNew)
-      console.log("buttonValueOftheRow", buttonValueOftheRow)
 
       const delUniqueKey = firebaseTaskDataNew[buttonValueOftheRow].uniqueKey;
       const delRefString = "allUserData/" + currentUser.uid + "/allTasksData/" + delUniqueKey;

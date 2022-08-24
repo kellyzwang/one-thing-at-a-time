@@ -10,10 +10,11 @@ import { SignIn } from './SignIn.js'
 
 import { Routes, Route, Outlet, Navigate, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getDatabase, ref, onValue } from 'firebase/database';
 
 
 
-function App(props) {
+function App() {
 
     const nullUser = { nuserId: null, userName: null }
     const [currentUser, setCurrentUser] = useState(nullUser);
@@ -44,11 +45,41 @@ function App(props) {
     //             "uid:", currentUser.uid)
 
     const loginUser = (userObject) => {
-        //can do more checking here if we want
         setCurrentUser(userObject);
         navigateTo('/home'); //go to chat "after" we log in!
     }
 
+
+    // get to do data from firebase for ToDo and Focus page:
+    const [ToDoData, setToDoData] = useState([{}]);
+    // get toDo data from firebase!
+  useEffect(() => {
+
+    const db = getDatabase();
+
+    // refers to "allAddedToDoData" for current user in the database
+    const allAddedToDoDataRef = ref(db, "allUserData/" + [currentUser.uid] + "/allAddedToDoData");
+
+    const unregisterFunction = onValue(allAddedToDoDataRef, (snapshot) => {
+      const newVal = snapshot.val();
+
+      if (newVal !== null) {
+        const keys = Object.keys(newVal);
+        const newObjArray = keys.map((keyString) => {
+          return newVal[keyString];
+        })
+        setToDoData(newObjArray);
+      } else {
+        setToDoData([]);
+      }
+    })
+
+    //cleanup function for when component is removed
+    function cleanup() {
+      unregisterFunction(); //call the unregister function
+    }
+    return cleanup; //effect hook callback returns the cleanup function
+  }, [currentUser.uid])
 
 
     return (
@@ -61,10 +92,10 @@ function App(props) {
                     <Route element={<ProtectedPage currentUser={currentUser} />}>
 
                         <Route path="analysis" element={<Analysis currentUser={currentUser}/>} />
-                        <Route path="curr-task" element={<Curr_Task currentUser={currentUser}/>} />
+                        <Route path="curr-task" element={<Curr_Task currentUser={currentUser} ToDoData={ToDoData}/>} />
                         <Route path="motivation" element={<Motivation currentUser={currentUser}/>} />
                         <Route path="quote-manage" element={<QuoteManage currentUser={currentUser}/>} />
-                        <Route path="to-do" element={<Todo currentUser={currentUser}/>} />
+                        <Route path="to-do" element={<Todo currentUser={currentUser} ToDoData={ToDoData} />} />
 
                     </Route>
 
