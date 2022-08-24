@@ -77,7 +77,6 @@ export function QuoteManage(props) {
 
 function QuoteDataRow({ quote_item, index, firebaseQuoteData, currentUser }) {
 
-  console.log(firebaseQuoteData)
   const handleRemoveButton = (event) => {
     event.preventDefault();
     const buttonValueOftheRow = event.target.value;

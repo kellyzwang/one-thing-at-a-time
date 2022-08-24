@@ -1,7 +1,8 @@
-import { getDatabase, ref, onValue, push as firebasePush } from 'firebase/database';
+import { getDatabase, ref, onValue, push as firebasePush, set as firebaseSet } from 'firebase/database';
 import { useState, useEffect } from 'react';
 import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
+import { Button } from 'reactstrap';
 
 
 export function Curr_Task(props) {
@@ -39,6 +40,8 @@ export function Curr_Task(props) {
   const [selectedDate, setSelectedDate] = useState();
   const [firebaseTasksData, setFirebaseTasksData] = useState([{}]);
   const [tasksData, setTasksData] = useState([{}]);
+
+
 
   useEffect(() => {
     // what to do FIRST TIME the component loads
@@ -181,13 +184,22 @@ export function Curr_Task(props) {
   const rows = tasksData.map((task, index) => {
     if (!selectedDate || task.date == selectedDate) {
       return (
-        <tr key={index}>
-          <td>{task.name}</td>
-          <td>{task.Est_Time}</td>
-          <td>{task.Actual_time}</td>
-        </tr>);
+          <TaskHistoryDataRow index={index} 
+            key={index}
+            task={task}
+            firebaseTaskData={firebaseTasksData} 
+            currentUser={props.currentUser}/>
+        );
     }
   });
+
+  console.log("tasksData", tasksData)
+
+ // convert data into rows
+ //const rows = quoteData.map((quote_item, index) => {
+ // return <QuoteDataRow key={index} quote_item={quote_item} index={index}
+  //  firebaseQuoteData={firebaseQuoteData} currentUser={props.currentUser}/>
+ // });
 
   const dropDownChange = (event) => {
 
@@ -202,7 +214,7 @@ export function Curr_Task(props) {
         <div className="container">
           <div className="heading-container">
             <img src='img/pink-rabbit.png' alt='pink-rabbit logo'></img>
-            <h3>Current Tasks: </h3>
+            <h3>Current Tasks:</h3>
           </div>
           <form>
             <div>
@@ -253,7 +265,7 @@ export function Curr_Task(props) {
         <div className="container">
           <div className="heading-container">
             <img src='img/pink-rabbit.png' alt='pink-rabbit logo'></img>
-            <h3>History: </h3>
+            <h3>History:</h3>
           </div>
           <div>
             <label htmlFor='date'>Date: </label>
@@ -265,6 +277,7 @@ export function Curr_Task(props) {
                     <th>Task Name</th>
                     <th>Estimated Time</th>
                     <th>Actual Time</th>
+                    <td>Action</td>
                   </tr>
                 </thead>
                 <tbody>
@@ -277,4 +290,53 @@ export function Curr_Task(props) {
       </section>
     </div>
   )
+}
+
+function TaskHistoryDataRow({ name, task, index, firebaseTaskData, currentUser }) {
+
+  const handleRemoveButton = (event) => {
+    event.preventDefault();
+    const buttonValueOftheRow = event.target.value;
+
+    const db = getDatabase();
+
+    if (firebaseTaskData !== null) {
+      const firebaseTaskDataNew = []
+      for (const [key, value] of Object.entries(firebaseTaskData)) {
+        let obj = { uniqueKey: key };
+        for (const [k, v] of Object.entries(value)) {
+          if (k === "name") {
+            obj.name = v;
+          } else if (k === "Est_Time") {
+            obj.Est_Time = v;
+          } else if (k === "Actual_time") {
+            obj.Actual_time = v;
+          } 
+        }
+        firebaseTaskDataNew.push(obj);
+      }
+
+      console.log(firebaseTaskDataNew)
+      console.log("buttonValueOftheRow", buttonValueOftheRow)
+
+      const delUniqueKey = firebaseTaskDataNew[buttonValueOftheRow].uniqueKey;
+      const delRefString = "allUserData/" + currentUser.uid + "/allTasksData/" + delUniqueKey;
+      console.log(delRefString)
+      const delRef = ref(db, delRefString);
+      firebaseSet(delRef, null);
+    }
+  }
+
+  return (
+
+    <tr key={index}>
+          <td>{task.name}</td>
+          <td>{task.Est_Time}</td>
+          <td>{task.Actual_time}</td>
+          <td>
+            <Button outline color="danger" value={index} onClick={handleRemoveButton}>Remove</Button>
+          </td>
+    </tr>
+
+  );
 }
