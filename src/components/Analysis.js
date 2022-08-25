@@ -3,13 +3,14 @@ import { getDatabase, ref, onValue, push as firebasePush } from 'firebase/databa
 import { useState, useEffect } from 'react';
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS } from 'chart.js/auto';
+import { ToastBody } from 'reactstrap';
 
 
 export function Analysis(props) {
   const today = new Date();
   const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7);
-  const [toDate, setToDate] = useState(today.toISOString().split('T')[0]);
-  const [fromDate, setFromDate] = useState(lastWeek.toISOString().split('T')[0]);
+  const [toDate, setToDate] = useState(today);
+  const [fromDate, setFromDate] = useState(lastWeek);
   const [totalTime, setTotalTime] = useState(0);
   const [firebaseTasksData, setFirebaseTasksData] = useState([{}]);
   const [tasksData, setTasksData] = useState([{}]);
@@ -50,52 +51,60 @@ export function Analysis(props) {
 
 
   const handleFromDateChange = (event) => {
-    console.log(tasksData);
-
     const fromDateValue = event.target.value;
-    if (fromDateValue != null && fromDateValue != "" && fromDateValue != undefined) {
-      setFromDate(fromDateValue);
-    } else {
-    }
-    setFromDate(fromDateValue);
+    setFromDate(new Date(fromDateValue));
   }
   const handleToDateChange = (event) => {
     const toDateValue = event.target.value;
-if (toDateValue != null && toDateValue != "" && toDateValue != undefined) {
-      setFromDate(toDateValue);
-      event.target.setCustomValidity("");
-    } else {
-      event.target.setCustomValidity("");
-    }
-    setToDate(toDateValue);
+    setToDate(new Date(toDateValue));
   }
 
 
 
   const handleGraph = (event) => {
     var groupedTasks = [];
-      tasksData.reduce(function(res, task) {
+    tasksData.reduce(function(res, task) {
+      let date = new Date(task.date);
+      if (date >= fromDate && date <= toDate) {
         if (!res[task.date]) {
           res[task.date] = { date: task.date, total_time: 0 };
           groupedTasks.push(res[task.date])
         }
-
         let split_actual_time = task.Actual_time.split(":");
         split_actual_time = split_actual_time.map(Number);
         let actual_time_second = split_actual_time[0]*3600 + split_actual_time[1]*60 + split_actual_time[2];
-
         res[task.date].total_time += actual_time_second;
-        return res;
-      }, {});
+      }
+    return res;
+    }, {});
+
+    let orderedGroupedTasks = [];
+    const date = new Date(fromDate);
+
+    while (date <= toDate) {
+      let dateString = date.toISOString().split('T')[0];
+      let groupedTask = undefined;
+      groupedTasks.map(task => {
+        if (task.date == dateString) {
+          groupedTask = task;
+          return;
+        }
+      })
+      if (groupedTask) {
+        orderedGroupedTasks.push({date: dateString, total_time: groupedTask.total_time});
+      } else {
+        orderedGroupedTasks.push({date: dateString, total_time: 0});
+      }
+      date.setDate(date.getDate() + 1);
+    }
 
     setChartTaskData({
-      labels: groupedTasks.map((task) => task.date),
+      labels: orderedGroupedTasks.map((task) => task.date),
       datasets: [{
           label:"Time focused",
-          data: groupedTasks.map((task) => task.total_time),
+          data: orderedGroupedTasks.map((task) => task.total_time),
           backgroundColor:'rgba(231,203,169)',
           borderRadius: 5,
-          borderWidth: 30,
 
       }]
     })
@@ -117,10 +126,10 @@ if (toDateValue != null && toDateValue != "" && toDateValue != undefined) {
       <div className="container">
         <label>From: </label>
         <input type='date' className='input' name='from' required
-          value={fromDate} onChange={handleFromDateChange} />
+          value={fromDate.toISOString().split('T')[0]} onChange={handleFromDateChange} max={toDate.toISOString().split('T')[0]}/>
         <label>To: </label>
         <input type='date' className="input" name='to' placeholder="" required
-          value={toDate} onChange={handleToDateChange} />
+          value={toDate.toISOString().split('T')[0]} onChange={handleToDateChange} max={today.toISOString().split('T')[0]}/>
       </div>
 
     </section>
