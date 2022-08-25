@@ -1,5 +1,5 @@
 import { getDatabase, ref, onValue, push as firebasePush, set as firebaseSet } from 'firebase/database';
-import { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
 import { Button } from 'reactstrap';
@@ -99,9 +99,11 @@ export function Curr_Task(props) {
     setDateEntered(dateValue);
   }
 
+  console.log("test:",estTimeEntered)
   const handleEstTimeChange = (event) => {
     const estTimeValue = event;
-
+    console.log(event)
+    //estTimeEntered == null || estTimeEntered === "" || estTimeEntered === undefined
     // disable button and display validation error message 
     if (estTimeValue == null || estTimeValue === "" || estTimeValue === undefined) {
       //event.target.setCustomValidity("Estimated time field cannot be empty.");
@@ -147,8 +149,8 @@ export function Curr_Task(props) {
         setStatus({ type: 'error', error });
       });
 
-    // set input data back to "" so it clears after submit
-    setDateEntered("");
+    // set input data back to default so it clears after submit
+    setDateEntered(todaysDate);
     setEstTimeEntered("");
     setTaskNameEntered("");
     setHour(0);
@@ -178,13 +180,46 @@ export function Curr_Task(props) {
 
 
   //// Task Name input box and handle change ////
-  const currentToDoListOptions = props.ToDoData.map((task, index) => {
-      return (
-        <option key={index} value={task.ToDoTask}>{task.ToDoTask}</option>
-        );
-    
-  });
+  const options = props.ToDoData.map((obj) => {
+    return obj.ToDoTask;
+})
 
+const ulRef = useRef();
+    const inputRef = useRef();
+    useEffect(() => {
+        inputRef.current.addEventListener('click', (e) => {
+            e.stopPropagation();
+            console.log("input clicked");
+            ulRef.current.style.display = 'flex';
+            handleTextChange(e);
+        });
+        document.addEventListener('click', (e) => {
+            console.log("document clicked")
+            console.log(ulRef.current)
+            ulRef.current.style.display = 'none';
+        });
+    }, [])
+ 
+
+    const handleTextChange = (event) => {
+      const taskNameValue = event.target.value;
+      console.log("taskNameValue:", taskNameValue)
+      //setTaskNameEntered(taskNameValue);
+      if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
+        event.target.setCustomValidity("Task Name field cannot be empty.");
+        setTaskNameEmpty(true);
+      } else {
+        event.target.setCustomValidity("");
+        setTaskNameEmpty(false);
+        ulRef.current.style.display = 'none';
+      }
+      setErrorMessage(event.target.validationMessage);
+
+      setTaskNameEntered(taskNameValue);
+  }
+
+
+///////////// ????? need to work on this
   const handleTaskNameChange = (event) => {
     const taskNameValue = event.target.value;
 
@@ -224,7 +259,7 @@ export function Curr_Task(props) {
               <label htmlFor='name'>Task Name: </label>
 
 
-              <select onChange={handleTaskNameChange}>
+              {/*<select onChange={handleTaskNameChange}>
                 <option value="">Select a Task to work on</option>
                 {currentToDoListOptions}
               </select>
@@ -233,7 +268,46 @@ export function Curr_Task(props) {
 
               <input type='text' className='input' name='name' required
                 placeholder='Type in the task name you&#39re about to work on'
-                value={taskNameEntered} onChange={handleTaskNameChange} />
+  value={taskNameEntered} onChange={handleTaskNameChange} /> */}
+
+<div>
+            <input 
+                className='search-bar-dropdown form-control'
+                placeholder="Type in a task name or choose one from your to-do list"
+                onChange={handleTextChange}
+                ref={inputRef}
+                type='text' />
+
+            <ul ref={ulRef} className='list-group'>
+                {options.map((option, index) => {
+                    return (
+                        <div key={index} className='suggestions-style'>
+                        <button 
+                            type="button" 
+                            className='list-group-item list-group-item-action'
+                            key={index}
+                            onClick={(event) => {
+                                inputRef.current.value = option;
+                                setTaskNameEntered(option);
+                                setTaskNameEmpty(false);
+                                if (inputRef.current.value == null || inputRef.current.value === "" || inputRef.current.value === undefined) {
+                                  event.target.setCustomValidity("Task Name field cannot be empty.");
+                                  setTaskNameEmpty(true);
+                                } else {
+                                  event.target.setCustomValidity("");
+                                  setTaskNameEmpty(false);
+                                  ulRef.current.style.display = 'none';
+                                }
+                                setErrorMessage(event.target.validationMessage);
+                                }}>
+                            {option}
+                        </button>
+                        </div>
+                    );
+                })}
+            </ul>
+
+        </div>
 
             </div>
             <div>
@@ -244,6 +318,7 @@ export function Curr_Task(props) {
                         "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0", 
                         "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0", 
                         "8:00:0"]}
+                defaultValue=""
                 value={estTimeEntered}
                 placeholder={"hh:mm:ss"}
                 onSelect={handleEstTimeChange} 
