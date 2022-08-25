@@ -166,7 +166,13 @@ padding-right: 2%;
     margin: 3%;
 }
 
+.search-bar-dropdown {
+    width: 30em;
+}
 
+.suggestions-style .list-group-item:hover {
+    background-color: #f5e2e4;
+}
 
 /* Quote view */
 #quote-view {
