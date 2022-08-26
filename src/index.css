@@ -1,9 +1,9 @@
 body {
-
+    
 }
-img {
+/* img {
     border-radius: 50%;
-}
+} */
 
 h1, h2, h3 {
     font-family: 'IM Fell Great Primer SC', serif;
@@ -72,18 +72,29 @@ nav span {
 }
 
 #home > img {
-    height: 17rem;
+    height:5rem;
 }
 
 #rabbit-row {
-    display: flex;
-    background-repeat: repeat-y;
+    bottom:0px;
+    position: fixed;
+    padding-bottom: 6em;
 }
 
-#rabbit-row > img {
+.repeatimg {
+    background-repeat: repeat-x;
+    background-image: url("../public/img/rabbits-bottom.png");
+    border-image-repeat: space;
+    width: 100%;
+    margin-inline: 2em;
+}
+
+
+
+/* #rabbit-row > img {
     width: 6.5%;
     margin: 0.55%;
-}
+} */
 
 /*To-do view*/
 #to-do-view> .container {
