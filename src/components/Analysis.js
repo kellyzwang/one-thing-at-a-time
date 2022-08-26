@@ -2,6 +2,7 @@ import React from 'react';
 import { getDatabase, ref, onValue, push as firebasePush } from 'firebase/database';
 import { useState, useEffect } from 'react';
 import { Bar } from "react-chartjs-2";
+import { Button } from 'reactstrap';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { ToastBody } from 'reactstrap';
 
@@ -112,25 +113,32 @@ export function Analysis(props) {
 
 
   return (
-    <section>
+    <section id='analysis-view'>
+      {/* <div className="container">
+      </div>*/}
       <div className="container">
-      </div>
-      <div className="container">
-        {/* <p>Focus Time From {fromDate} To {toDate}</p> */}
-        <div id="graph">
-        <Bar data={chartTaskData}/>
-        </div>
-        <button onClick={handleGraph}>Apply Filter</button>
-
-      </div>
-      <div className="container">
+        <div className="heading-container">
+            <img src='img/light-brown-rabbit.png' alt='light-brown-rabbit logo'></img>
+            <h3>Focus Time Analysis:</h3>
+          </div>
         <label>From: </label>
         <input type='date' className='input' name='from' required
           value={fromDate.toISOString().split('T')[0]} onChange={handleFromDateChange} max={toDate.toISOString().split('T')[0]}/>
         <label>To: </label>
         <input type='date' className="input" name='to' placeholder="" required
           value={toDate.toISOString().split('T')[0]} onChange={handleToDateChange} max={today.toISOString().split('T')[0]}/>
+          
+        {/*<button onClick={handleGraph}>Apply Filter</button>*/}
+        <Button color="secondary" size="sm" className="long-but" onClick={handleGraph}>Apply Filter</Button>
+        
       </div>
+      <div className="container">
+        {/* <p>Focus Time From {fromDate} To {toDate}</p> */}
+        <div id="graph">
+        <Bar data={chartTaskData}/>
+        </div>
+      </div>
+      
 
     </section>
 

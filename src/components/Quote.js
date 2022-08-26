@@ -77,10 +77,12 @@ export function Quote(props) {
             <img src='img/red-rabbit.png' alt='red-rabbit logo'></img>
             <h3>Quote of the day: </h3>
           </div>
-          <p className="quotedisplay">{displayedQuote}</p>
+          <p className="quotedisplay">{displayedQuote}
           <Button color="secondary" size="sm" className="long-but" onClick={handleNewQuoteSubmit}>New Quote</Button>
+          </p>
         </div>
         <div className="container">
+        <h3>Add a new Quote or Manage your quotes:</h3>
           <input type='text' id='quote-input' placeholder="Type a new quote" required
             value={quoteEntered} onChange={handleQuoteChange} />
             <div className="error-message">{errorMessage}</div>
@@ -90,14 +92,13 @@ export function Quote(props) {
           </div>
           <Button color="secondary" size="sm"
             className="long-but" disabled={isDisabled} onClick={handleAddQuoteSubmit}>Add New Quote</Button>
-          
-        </div>
-        <div className="container">
-          <h3>View your added quotes or remove quote</h3>
+
           <NavLink to="/quote-manage">
             <Button color="secondary" size="sm" className="long-but">Manage New Quote</Button>
           </NavLink>
+          
         </div>
+        
       </section>
     </div>
   )

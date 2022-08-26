@@ -1,7 +1,8 @@
-body {
+/* body {
     
 }
-/* img {
+
+img {
     border-radius: 50%;
 } */
 
@@ -26,6 +27,7 @@ h1, h2, h3 {
     display: inline-block;
     font-size: 13px;
 }
+
 /* header styles */
 .color-nav {
     background-color: #F5F3E7;
@@ -186,6 +188,21 @@ padding-right: 2%;
     background-color: #f5e2e4;
 }
 
+/* Analysis view */
+#analysis-view {
+    margin-top: 120px;
+}
+
+#analysis-view .long-but {
+    background-color: #E7CBA9;
+    border-color: #E7CBA9;
+    color: black;
+    margin: 2em;
+}
+
+#analysis-view label {
+    margin: 2em;
+}
 /* Quote view */
 #quote-view {
     margin-top: 120px;
@@ -201,7 +218,13 @@ margin-right: 10px;
     background-color: #eebab2;
     border-color: #eebab2;
     color: black;
+    margin-inline: 2em;
 }
+
+#quote-view input, p {
+    margin: 2em;
+}
+
 .success-message {
     color: #4F8A10;
 }

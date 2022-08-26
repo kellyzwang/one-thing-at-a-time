@@ -323,8 +323,7 @@ const ulRef = useRef();
                 placeholder={"hh:mm:ss"}
                 onSelect={handleEstTimeChange} 
               />
-              {/*<input type='time' className="input" name='time' required
-                value={estTimeEntered} onChange={handleEstTimeChange} />*/}
+              
             </div>
           </form>
           <div className="error-message">{errorMessage}</div>
