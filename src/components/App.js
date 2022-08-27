@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Todo } from './Todo.js';
 import { Home } from './Home.js';
 import { NavBar } from './NavBar.js';
-import { Curr_Task } from './Curr_Task.js';
+import { Focus } from './Focus.js';
 import { Analysis } from './Analysis.js';
 import { QuoteManage } from './QuoteManage.js'
 import { Motivation } from './Motivation.js'
@@ -92,7 +92,7 @@ function App() {
                     <Route element={<ProtectedPage currentUser={currentUser} />}>
 
                         <Route path="analysis" element={<Analysis currentUser={currentUser}/>} />
-                        <Route path="curr-task" element={<Curr_Task currentUser={currentUser} ToDoData={ToDoData}/>} />
+                        <Route path="focus" element={<Focus currentUser={currentUser} ToDoData={ToDoData}/>} />
                         <Route path="motivation" element={<Motivation currentUser={currentUser}/>} />
                         <Route path="quote-manage" element={<QuoteManage currentUser={currentUser}/>} />
                         <Route path="to-do" element={<Todo currentUser={currentUser} ToDoData={ToDoData} />} />

@@ -35,7 +35,7 @@ export function NavBar(props) {
                                 <Nav.Link as={Link} to="/to-do">To Do</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link as={Link} to="/curr-task">Focus</Nav.Link>
+                                <Nav.Link as={Link} to="/focus">Focus</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
                                 <Nav.Link as={Link} to="/analysis">Analysis</Nav.Link>

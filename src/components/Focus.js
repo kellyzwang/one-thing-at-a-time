@@ -5,7 +5,7 @@ import "react-widgets/styles.css";
 import { Button } from 'reactstrap';
 
 
-export function Curr_Task(props) {
+export function Focus(props) {
 
   const current = new Date();
 
