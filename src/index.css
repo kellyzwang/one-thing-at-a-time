@@ -1,5 +1,5 @@
 /* body {
-    
+
 }
 
 img {
@@ -221,7 +221,7 @@ margin-right: 10px;
     margin-inline: 2em;
 }
 
-#quote-view input, p {
+#quote-view input, #quote-view p {
     margin: 2em;
 }
 
@@ -251,6 +251,18 @@ h3 {
     font-size: 200%;
     margin: 30px;
 }
+
+h4 {
+    font-family: 'Share Tech Mono', monospace;
+    color: #0B1354;
+}
+#graphContainer {
+    margin-left: 5%;
+    margin-right: 5%;
+
+}
+
+
 
 /* Motivation page */
 .quotedisplay {

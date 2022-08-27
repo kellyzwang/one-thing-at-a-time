@@ -12,7 +12,7 @@ export function Analysis(props) {
   const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7);
   const [toDate, setToDate] = useState(today);
   const [fromDate, setFromDate] = useState(lastWeek);
-  const [totalTime, setTotalTime] = useState(0);
+  const [totalTime, setTotalTime] = useState("");
   const [firebaseTasksData, setFirebaseTasksData] = useState([{}]);
   const [tasksData, setTasksData] = useState([{}]);
   const [chartTaskData, setChartTaskData] = useState({
@@ -55,15 +55,27 @@ export function Analysis(props) {
     const fromDateValue = event.target.value;
     setFromDate(new Date(fromDateValue));
   }
+
   const handleToDateChange = (event) => {
     const toDateValue = event.target.value;
     setToDate(new Date(toDateValue));
   }
 
+  const handleTotalTime = (totalTimeSec) => {
+    if (totalTimeSec < 3600) {
+      let totalTimeMin = totalTimeSec/60;
+      totalTimeMin = Math.round(totalTimeMin * 10) / 10
+      setTotalTime(totalTimeMin + " minutes");
+    } else {
+      let totalTimeHr = totalTimeSec/3600;
+      totalTimeHr = Math.round(totalTimeHr * 10) / 10
+      setTotalTime(totalTimeHr + " hours");
+    }
+  }
 
-
-  const handleGraph = (event) => {
+  const handleApplyFilter = () => {
     var groupedTasks = [];
+    let totalTimeSec = 0;
     tasksData.reduce(function(res, task) {
       let date = new Date(task.date);
       if (date >= fromDate && date <= toDate) {
@@ -74,6 +86,7 @@ export function Analysis(props) {
         let split_actual_time = task.Actual_time.split(":");
         split_actual_time = split_actual_time.map(Number);
         let actual_time_second = split_actual_time[0]*3600 + split_actual_time[1]*60 + split_actual_time[2];
+        totalTimeSec += actual_time_second;
         res[task.date].total_time += actual_time_second;
       }
     return res;
@@ -109,6 +122,7 @@ export function Analysis(props) {
 
       }]
     })
+    handleTotalTime(totalTimeSec);
   }
 
 
@@ -127,18 +141,20 @@ export function Analysis(props) {
         <label>To: </label>
         <input type='date' className="input" name='to' placeholder="" required
           value={toDate.toISOString().split('T')[0]} onChange={handleToDateChange} max={today.toISOString().split('T')[0]}/>
-          
+
         {/*<button onClick={handleGraph}>Apply Filter</button>*/}
-        <Button color="secondary" size="sm" className="long-but" onClick={handleGraph}>Apply Filter</Button>
-        
+        <Button color="secondary" size="sm" className="long-but" onClick={handleApplyFilter}>Apply Filter</Button>
+
       </div>
       <div className="container">
-        {/* <p>Focus Time From {fromDate} To {toDate}</p> */}
-        <div id="graph">
-        <Bar data={chartTaskData}/>
+        <div id="graphContainer">
+          <p>Focus Time From {fromDate.toISOString().split('T')[0]} To {toDate.toISOString().split('T')[0]}: </p>
+          <h4>{totalTime}</h4>
+          <div id="graph">
+          <Bar data={chartTaskData}/>
+          </div>
         </div>
       </div>
-      
 
     </section>
 
