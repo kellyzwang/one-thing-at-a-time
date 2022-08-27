@@ -30,10 +30,10 @@ export function Curr_Task(props) {
   const [taskNameEntered, setTaskNameEntered] = useState("");
   const [estTimeEntered, setEstTimeEntered] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [dateEmpty, setDateEmpty] = useState(false);
   const [estTimeEmpty, setEstTimeEmpty] = useState(true);
   const [taskNameEmpty, setTaskNameEmpty] = useState(true);
   const [timerStarted, setTimerStarted] = useState(false);
+  const [disableTaskComplete, setDisableTaskComplete] = useState(true);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
@@ -89,10 +89,8 @@ export function Curr_Task(props) {
     // disable button and display validation error message if enteredQuoteValue is empty
     if (dateValue == null || dateValue === "" || dateValue === undefined) {
       event.target.setCustomValidity("Date field cannot be empty.");
-      setDateEmpty(true);
     } else {
       event.target.setCustomValidity("");
-      setDateEmpty(false);
     }
     setErrorMessage(event.target.validationMessage);
 
@@ -125,6 +123,7 @@ export function Curr_Task(props) {
 
   const stopTimer = (event) => {
     setTimerStarted(false);
+    setDisableTaskComplete(false);
   }
 
   const [status, setStatus] = useState(undefined);
@@ -154,9 +153,9 @@ export function Curr_Task(props) {
     setHour(0);
     setMinute(0);
     setSecond(0);
-    setDateEmpty(true);
     setEstTimeEmpty(true);
     setTaskNameEmpty(true);
+    setDisableTaskComplete(true);
     setStatus(undefined);
   }
 
@@ -193,7 +192,8 @@ const ulRef = useRef();
             ulRef.current.style.display = 'flex';
             handleTextChange(e);
         });
-        document.addEventListener('click', (e) => {
+        let focusPage = document.getElementById('curr-task-view');
+        focusPage.addEventListener('click', (e) => {
 
             ulRef.current.style.display = 'none';
         });
@@ -235,7 +235,6 @@ const ulRef = useRef();
     setTaskNameEntered(taskNameValue);
   }
 
-  //console.log(dateEmpty ,estTimeEmpty ,taskNameEmpty, timerStarted)
 
 
   return (
@@ -273,6 +272,7 @@ const ulRef = useRef();
                 placeholder="Type in a task name or choose one from your to-do list"
                 onChange={handleTextChange}
                 ref={inputRef}
+                value={taskNameEntered}
                 type='text' />
 
             <ul ref={ulRef} className='list-group'>
@@ -328,9 +328,9 @@ const ulRef = useRef();
             {status?.type === 'success' && <p className="success-message">You have successfully added a new task!</p>}
             {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
           </div>
-          <button className="long-but" disabled={dateEmpty || estTimeEmpty || taskNameEmpty || timerStarted} onClick={startTimer}>Start/Continue Timer</button>
-          <button className="long-but" disabled={dateEmpty || estTimeEmpty || taskNameEmpty || !timerStarted} onClick={stopTimer}>Stop Timer</button>
-          <button className="long-but" disabled={timerStarted} onClick={handleCurrTaskSubmit}>Task Completed</button>
+          <button className="long-but" disabled={estTimeEmpty || taskNameEmpty || timerStarted} onClick={startTimer}>Start/Continue Timer</button>
+          <button className="long-but" disabled={estTimeEmpty || taskNameEmpty || !timerStarted} onClick={stopTimer}>Stop Timer</button>
+          <button className="long-but" disabled={disableTaskComplete} onClick={handleCurrTaskSubmit}>Task Completed</button>
           <p>Time passed: {hour} hr: {minute} min: {second} sec</p>
         </div>
         <div className="container">
