@@ -78,7 +78,7 @@ export function Curr_Task(props) {
     }
 
     function cleanup() {
-      unregisterFunction(); 
+      unregisterFunction();
     }
     return () => clearInterval(timerId);
   }, [timerStarted, second, minute, hour])
@@ -99,12 +99,10 @@ export function Curr_Task(props) {
     setDateEntered(dateValue);
   }
 
-  console.log("test:",estTimeEntered)
   const handleEstTimeChange = (event) => {
     const estTimeValue = event;
-    console.log(event)
     //estTimeEntered == null || estTimeEntered === "" || estTimeEntered === undefined
-    // disable button and display validation error message 
+    // disable button and display validation error message
     if (estTimeValue == null || estTimeValue === "" || estTimeValue === undefined) {
       //event.target.setCustomValidity("Estimated time field cannot be empty.");
       setErrorMessage("Estimated time field cannot be empty.");
@@ -167,12 +165,15 @@ export function Curr_Task(props) {
   };
 
   const rows = tasksData.map((task, index) => {
+    if (firebaseTasksData == null) {
+      return;
+    }
     if (!selectedDate || task.date == selectedDate) {
       return (
-          <TaskHistoryDataRow index={index} 
+          <TaskHistoryDataRow index={index}
             key={index}
             task={task}
-            firebaseTaskData={firebaseTasksData} 
+            firebaseTaskData={firebaseTasksData}
             currentUser={props.currentUser}/>
         );
     }
@@ -189,21 +190,18 @@ const ulRef = useRef();
     useEffect(() => {
         inputRef.current.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log("input clicked");
             ulRef.current.style.display = 'flex';
             handleTextChange(e);
         });
         document.addEventListener('click', (e) => {
-            console.log("document clicked")
-            console.log(ulRef.current)
+
             ulRef.current.style.display = 'none';
         });
     }, [])
- 
+
 
     const handleTextChange = (event) => {
       const taskNameValue = event.target.value;
-      console.log("taskNameValue:", taskNameValue)
       //setTaskNameEntered(taskNameValue);
       if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
         event.target.setCustomValidity("Task Name field cannot be empty.");
@@ -232,7 +230,6 @@ const ulRef = useRef();
       setTaskNameEmpty(false);
     }
 
-    console.log(taskNameValue)
     setErrorMessage(event.target.validationMessage);
 
     setTaskNameEntered(taskNameValue);
@@ -271,7 +268,7 @@ const ulRef = useRef();
   value={taskNameEntered} onChange={handleTaskNameChange} /> */}
 
 <div>
-            <input 
+            <input
                 className='search-bar-dropdown form-control'
                 placeholder="Type in a task name or choose one from your to-do list"
                 onChange={handleTextChange}
@@ -282,8 +279,8 @@ const ulRef = useRef();
                 {options.map((option, index) => {
                     return (
                         <div key={index} className='suggestions-style'>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className='list-group-item list-group-item-action'
                             key={index}
                             onClick={(event) => {
@@ -314,16 +311,16 @@ const ulRef = useRef();
               <label htmlFor='time'>Estimated work time (how much time you plan to spend): </label>
 
               <DropdownList
-                data={["0:30:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0", 
-                        "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0", 
-                        "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0", 
+                data={["0:30:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0",
+                        "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0",
+                        "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0",
                         "8:00:0"]}
                 defaultValue=""
                 value={estTimeEntered}
                 placeholder={"hh:mm:ss"}
-                onSelect={handleEstTimeChange} 
+                onSelect={handleEstTimeChange}
               />
-              
+
             </div>
           </form>
           <div className="error-message">{errorMessage}</div>
@@ -371,9 +368,7 @@ function TaskHistoryDataRow({ task, index, firebaseTaskData, currentUser }) {
   const handleRemoveButton = (event) => {
     event.preventDefault();
     const buttonValueOftheRow = event.target.value;
-
     const db = getDatabase();
-
     if (firebaseTaskData !== null) {
       const firebaseTaskDataNew = []
       for (const [key, value] of Object.entries(firebaseTaskData)) {
@@ -385,19 +380,17 @@ function TaskHistoryDataRow({ task, index, firebaseTaskData, currentUser }) {
             obj.Est_Time = v;
           } else if (k === "Actual_time") {
             obj.Actual_time = v;
-          } 
+          }
         }
         firebaseTaskDataNew.push(obj);
       }
 
       const delUniqueKey = firebaseTaskDataNew[buttonValueOftheRow].uniqueKey;
       const delRefString = "allUserData/" + currentUser.uid + "/allTasksData/" + delUniqueKey;
-      console.log(delRefString)
       const delRef = ref(db, delRefString);
       firebaseSet(delRef, null);
     }
   }
-
   return (
 
     <tr key={index}>
