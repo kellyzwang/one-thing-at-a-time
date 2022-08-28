@@ -3,7 +3,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from 'react-router-dom';
 
-import { getAuth, signOut} from 'firebase/auth';
+import { getAuth, signOut } from 'firebase/auth';
 
 
 export function NavBar(props) {
@@ -14,8 +14,8 @@ export function NavBar(props) {
 
     const handleSignOut = (event) => {
         signOut(getAuth());
-      }  
-    
+    }
+
 
     return (
 
@@ -51,8 +51,8 @@ export function NavBar(props) {
                                 <Nav.Link as={Link} to="/signin" className="signin-margin">Sign In</Nav.Link>
                             }
                             {currentUser && <>
-                                    <Nav.Link to="/profile" className="signin-margin">Hi {currentUserName}!</Nav.Link>
-                                    <Nav.Link as={Link} to="/home" className="signin-margin signout-margin" onClick={handleSignOut}>Sign Out</Nav.Link>
+                                <Nav.Link to="/profile" className="signin-margin">Hi {currentUserName}!</Nav.Link>
+                                <Nav.Link as={Link} to="/home" className="signin-margin signout-margin" onClick={handleSignOut}>Sign Out</Nav.Link>
                             </>
                             }
                         </Nav>
@@ -60,7 +60,7 @@ export function NavBar(props) {
 
                 </Navbar>
             </header>
-            
+
         </div>
     )
 }

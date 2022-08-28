@@ -169,12 +169,12 @@ export function Focus(props) {
     }
     if (!selectedDate || task.date == selectedDate) {
       return (
-          <TaskHistoryDataRow index={index}
-            key={index}
-            task={task}
-            firebaseTaskData={firebaseTasksData}
-            currentUser={props.currentUser}/>
-        );
+        <TaskHistoryDataRow index={index}
+          key={index}
+          task={task}
+          firebaseTaskData={firebaseTasksData}
+          currentUser={props.currentUser} />
+      );
     }
   });
 
@@ -182,54 +182,34 @@ export function Focus(props) {
   //// Task Name input box and handle change ////
   const options = props.ToDoData.map((obj) => {
     return obj.ToDoTask;
-})
+  })
 
-const ulRef = useRef();
-    const inputRef = useRef();
-    useEffect(() => {
-        inputRef.current.addEventListener('click', (e) => {
-            e.stopPropagation();
-            ulRef.current.style.display = 'flex';
-            handleTextChange(e);
-        });
-        let focusPage = document.getElementById('curr-task-view');
-        focusPage.addEventListener('click', (e) => {
+  const ulRef = useRef();
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.addEventListener('click', (e) => {
+      e.stopPropagation();
+      ulRef.current.style.display = 'flex';
+      handleTextChange(e);
+    });
+    let focusPage = document.getElementById('curr-task-view');
+    focusPage.addEventListener('click', (e) => {
 
-            ulRef.current.style.display = 'none';
-        });
-    }, [])
-
-
-    const handleTextChange = (event) => {
-      const taskNameValue = event.target.value;
-      //setTaskNameEntered(taskNameValue);
-      if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
-        event.target.setCustomValidity("Task Name field cannot be empty.");
-        setTaskNameEmpty(true);
-      } else {
-        event.target.setCustomValidity("");
-        setTaskNameEmpty(false);
-        ulRef.current.style.display = 'none';
-      }
-      setErrorMessage(event.target.validationMessage);
-
-      setTaskNameEntered(taskNameValue);
-  }
+      ulRef.current.style.display = 'none';
+    });
+  }, [])
 
 
-///////////// ????? need to work on this
-  const handleTaskNameChange = (event) => {
+  const handleTextChange = (event) => {
     const taskNameValue = event.target.value;
-
-    // disable button and display validation error message if task name is empty
     if (taskNameValue == null || taskNameValue === "" || taskNameValue === undefined) {
       event.target.setCustomValidity("Task Name field cannot be empty.");
       setTaskNameEmpty(true);
     } else {
       event.target.setCustomValidity("");
       setTaskNameEmpty(false);
+      ulRef.current.style.display = 'none';
     }
-
     setErrorMessage(event.target.validationMessage);
 
     setTaskNameEntered(taskNameValue);
@@ -241,120 +221,119 @@ const ulRef = useRef();
     <div>
       <section id="curr-task-view">
         <div className="container">
+
           <div className="heading-container">
             <img src='img/pink-rabbit.png' alt='pink-rabbit logo'></img>
             <h3>Current Tasks:</h3>
           </div>
-          <form>
-            <div>
-              <label htmlFor='date'>Date: </label>
-              <input type='date' className='input' name='date' required
-                value={dateEntered} onChange={handleDateChange} />
-            </div>
-            <div>
-              <label htmlFor='name'>Task Name: </label>
+          <div className="margin-2em">
+            <form>
+              <div>
+                <label htmlFor='date'>Date: </label>
+                <input type='date' className='input' name='date' required
+                  value={dateEntered} onChange={handleDateChange} />
+              </div>
+              <div>
+                <label htmlFor='name'>Task Name: </label>
+                <div>
+                  <input
+                    className='search-bar-dropdown form-control'
+                    placeholder="Type in a task name or choose one from your to-do list"
+                    onChange={handleTextChange}
+                    ref={inputRef}
+                    value={taskNameEntered}
+                    type='text' />
 
-
-              {/*<select onChange={handleTaskNameChange}>
-                <option value="">Select a Task to work on</option>
-                {currentToDoListOptions}
-              </select>
-
-              <span> or type a new task: </span>
-
-              <input type='text' className='input' name='name' required
-                placeholder='Type in the task name you&#39re about to work on'
-  value={taskNameEntered} onChange={handleTaskNameChange} /> */}
-
-<div>
-            <input
-                className='search-bar-dropdown form-control'
-                placeholder="Type in a task name or choose one from your to-do list"
-                onChange={handleTextChange}
-                ref={inputRef}
-                value={taskNameEntered}
-                type='text' />
-
-            <ul ref={ulRef} className='list-group'>
-                {options.map((option, index) => {
-                    return (
+                  <ul ref={ulRef} className='list-group'>
+                    {options.map((option, index) => {
+                      return (
                         <div key={index} className='suggestions-style'>
-                        <button
+                          <button
                             type="button"
                             className='list-group-item list-group-item-action'
                             key={index}
                             onClick={(event) => {
-                                inputRef.current.value = option;
-                                setTaskNameEntered(option);
+                              inputRef.current.value = option;
+                              setTaskNameEntered(option);
+                              setTaskNameEmpty(false);
+                              if (inputRef.current.value == null || inputRef.current.value === "" || inputRef.current.value === undefined) {
+                                event.target.setCustomValidity("Task Name field cannot be empty.");
+                                setTaskNameEmpty(true);
+                              } else {
+                                event.target.setCustomValidity("");
                                 setTaskNameEmpty(false);
-                                if (inputRef.current.value == null || inputRef.current.value === "" || inputRef.current.value === undefined) {
-                                  event.target.setCustomValidity("Task Name field cannot be empty.");
-                                  setTaskNameEmpty(true);
-                                } else {
-                                  event.target.setCustomValidity("");
-                                  setTaskNameEmpty(false);
-                                  ulRef.current.style.display = 'none';
-                                }
-                                setErrorMessage(event.target.validationMessage);
-                                }}>
+                                ulRef.current.style.display = 'none';
+                              }
+                              setErrorMessage(event.target.validationMessage);
+                            }}>
                             {option}
-                        </button>
+                          </button>
                         </div>
-                    );
-                })}
-            </ul>
+                      );
+                    })}
+                  </ul>
 
-        </div>
+                </div>
 
+              </div>
+              <div>
+                <label htmlFor='time'>Estimated work time (how much time you plan to spend): </label>
+
+                <DropdownList
+                  data={["0:30:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0",
+                    "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0",
+                    "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0",
+                    "8:00:0"]}
+                  defaultValue=""
+                  value={estTimeEntered}
+                  placeholder={"hh:mm:ss"}
+                  onSelect={handleEstTimeChange}
+                />
+
+              </div>
+            </form>
+            <div className="error-message">{errorMessage}</div>
+            <div className='center-flex'>
+              {status?.type === 'success' && <p className="success-message">You have successfully entered a new completed task!</p>}
+              {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
             </div>
-            <div>
-              <label htmlFor='time'>Estimated work time (how much time you plan to spend): </label>
+            <div className='timer-buttons'>
+              <button className="long-but" disabled={estTimeEmpty || taskNameEmpty || timerStarted} onClick={startTimer}>Start/Continue Timer</button>
+              <button className="long-but" disabled={estTimeEmpty || taskNameEmpty || !timerStarted} onClick={stopTimer}>Stop Timer</button>
+              <button className="long-but" disabled={disableTaskComplete} onClick={handleCurrTaskSubmit}>Task Completed</button>
 
-              <DropdownList
-                data={["0:30:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0",
-                        "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0",
-                        "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0",
-                        "8:00:0"]}
-                defaultValue=""
-                value={estTimeEntered}
-                placeholder={"hh:mm:ss"}
-                onSelect={handleEstTimeChange}
-              />
-
+              <h1>Time passed: {hour} hr: {minute} min: {second} sec</h1>
             </div>
-          </form>
-          <div className="error-message">{errorMessage}</div>
-          <div className='center-flex'>
-            {status?.type === 'success' && <p className="success-message">You have successfully added a new task!</p>}
-            {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
           </div>
-          <button className="long-but" disabled={estTimeEmpty || taskNameEmpty || timerStarted} onClick={startTimer}>Start/Continue Timer</button>
-          <button className="long-but" disabled={estTimeEmpty || taskNameEmpty || !timerStarted} onClick={stopTimer}>Stop Timer</button>
-          <button className="long-but" disabled={disableTaskComplete} onClick={handleCurrTaskSubmit}>Task Completed</button>
-          <p>Time passed: {hour} hr: {minute} min: {second} sec</p>
         </div>
         <div className="container">
-          <div className="heading-container">
+
+          <div className="heading-container curr-task-heading">
             <img src='img/pink-rabbit.png' alt='pink-rabbit logo'></img>
             <h3>History:</h3>
           </div>
-          <div>
-            <label htmlFor='date'>Date: </label>
-            <input type='date' className='input' name='date' onChange={handleSelectedDate} required />
+          <div className="margin-2em">
             <div>
-              <table className="table table-hover table-bordered">
-                <thead>
-                  <tr>
-                    <th>Task Name</th>
-                    <th>Estimated Time</th>
-                    <th>Actual Time</th>
-                    <td>Action</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows}
-                </tbody>
-              </table>
+              <form className="history-date">
+                <label htmlFor='date'>Date: </label>
+                <input type='date' className='input' name='date' onChange={handleSelectedDate} required />
+              </form>
+              <div>
+                <table className="table table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Task Name</th>
+                      <th>Date</th>
+                      <th>Estimated Time</th>
+                      <th>Actual Time</th>
+                      <td>Action</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -394,12 +373,13 @@ function TaskHistoryDataRow({ task, index, firebaseTaskData, currentUser }) {
   return (
 
     <tr key={index}>
-          <td>{task.name}</td>
-          <td>{task.Est_Time}</td>
-          <td>{task.Actual_time}</td>
-          <td>
-            <Button outline color="danger" value={index} onClick={handleRemoveButton}>Remove</Button>
-          </td>
+      <td>{task.name}</td>
+      <td>{task.date}</td>
+      <td>{task.Est_Time}</td>
+      <td>{task.Actual_time}</td>
+      <td>
+        <Button outline color="danger" value={index} onClick={handleRemoveButton}>Remove</Button>
+      </td>
     </tr>
 
   );

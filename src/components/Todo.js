@@ -11,7 +11,7 @@ export function Todo(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
-  
+
 
   const current = new Date();
   const longMonth = current.toLocaleString('en-us', { month: 'long' });
@@ -65,27 +65,31 @@ export function Todo(props) {
         <div>
 
           <h1 className="dateDisplayText">Today is <strong className="dateDisplay">{dateDisplay}</strong>.</h1>
-          <ToDoList ToDoData={props.ToDoData} currentUser={props.currentUser}/>
+          <ToDoList ToDoData={props.ToDoData} currentUser={props.currentUser} />
 
         </div>
 
         <Form>
           <Form.Group>
             <div className="container">
-              <div className="heading-container">
-                <Form.Label><h3>Add New To-Do:</h3></Form.Label>
 
-              </div>
-              <input type='text' id='task-input' placeholder="Type a new to-do task" required
-                value={toDoTaskEntered} onChange={handleAddNewTaskChange} />
-              <div className="error-message">{errorMessage}</div>
-              <div className='center-flex'>
-                {status?.type === 'success' && <p className="success-message">You have successfully added a new to-do task!</p>}
-                {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
-              </div>
-              <Button color="secondary" size="sm"
-                className="long-but" disabled={isDisabled} onClick={handleAddNewTaskSubmit}>Add New To-do</Button>
+              <Form.Label><h3>Add New To-Do:</h3></Form.Label>
+              <div className="margin-2em">
+                <div className='input-group'>
+                  <input type='text' id='task-input' className="form-control" placeholder="Type a new to-do task" required
+                    value={toDoTaskEntered} onChange={handleAddNewTaskChange} />
 
+                  <div className="input-group-append new-to-do-button">
+                    <Button color="secondary" size="sm"
+                      className="long-but" disabled={isDisabled} onClick={handleAddNewTaskSubmit}>Add New To-Do</Button>
+                  </div>
+                </div>
+                <div className="error-message">{errorMessage}</div>
+                <div className='center-flex'>
+                  {status?.type === 'success' && <p className="success-message">You have successfully added a new to-do task!</p>}
+                  {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
+                </div>
+              </div>
             </div>
 
           </Form.Group>

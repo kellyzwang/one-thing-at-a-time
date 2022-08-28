@@ -56,16 +56,16 @@ export function Quote(props) {
 
   const [displayedQuote, setDisplayedQuote] = useState("Click the 'New Quote' button below to see quote of the day! :)");
 
-    const handleNewQuoteSubmit = (event) => {
-        event.preventDefault();
+  const handleNewQuoteSubmit = (event) => {
+    event.preventDefault();
 
-        if (props.quoteData === null || props.quoteData === []) {
-            setDisplayedQuote("Oh no! There's no quotes in the database, try adding a new quote you like! :)");
-        }
-        const randomInt = Math.floor(Math.random() * props.quoteData.length);
-        const randomQuote = "\"" + props.quoteData[randomInt].Quote + "\"" ;
-        setDisplayedQuote(randomQuote);
+    if (props.quoteData === null || props.quoteData === []) {
+      setDisplayedQuote("Oh no! There's no quotes in the database, try adding a new quote you like! :)");
     }
+    const randomInt = Math.floor(Math.random() * props.quoteData.length);
+    const randomQuote = "\"" + props.quoteData[randomInt].Quote + "\"";
+    setDisplayedQuote(randomQuote);
+  }
 
 
 
@@ -78,27 +78,32 @@ export function Quote(props) {
             <h3>Quote of the day: </h3>
           </div>
           <p className="quotedisplay">{displayedQuote}
-          <Button color="secondary" size="sm" className="long-but" onClick={handleNewQuoteSubmit}>New Quote</Button>
+            <Button color="secondary" size="sm" className="long-but" onClick={handleNewQuoteSubmit}>New Quote</Button>
           </p>
         </div>
         <div className="container">
-        <h3>Add a new Quote or Manage your quotes:</h3>
-          <input type='text' id='quote-input' placeholder="Type a new quote" required
-            value={quoteEntered} onChange={handleQuoteChange} />
+          <h3>Add a new Quote or Manage your quotes:</h3>
+
+          <div className='center-input-buttons'>
+            <div className='textarea-margin'>
+              <textarea type='text' id='quote-input' placeholder="Type a new quote" required
+                value={quoteEntered} onChange={handleQuoteChange} />
+
+            </div>
             <div className="error-message">{errorMessage}</div>
             <div className='center-flex'>
-            {status?.type === 'success' && <p className="success-message">You have successfully added a new quote!</p>}
-            {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
-          </div>
-          <Button color="secondary" size="sm"
-            className="long-but" disabled={isDisabled} onClick={handleAddQuoteSubmit}>Add New Quote</Button>
+              {status?.type === 'success' && <p className="success-message">You have successfully added a new quote!</p>}
+              {status?.type === 'error' && (<p className="error-message">Oh no! There is an error.</p>)}
+            </div>
 
-          <NavLink to="/quote-manage">
-            <Button color="secondary" size="sm" className="long-but">Manage New Quote</Button>
-          </NavLink>
-          
+            <Button color="secondary" size="sm"
+              className="long-but" disabled={isDisabled} onClick={handleAddQuoteSubmit}>Add New Quote</Button>
+
+            <NavLink to="/quote-manage">
+              <Button color="secondary" size="sm" className="long-but">Manage New Quote</Button>
+            </NavLink>
+          </div>
         </div>
-        
       </section>
     </div>
   )

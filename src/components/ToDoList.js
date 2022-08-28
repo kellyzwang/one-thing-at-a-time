@@ -42,16 +42,18 @@ export function ToDoList(props) {
     return (
         <div>
             <div className="container">
+
                 <div className="heading-container">
                     <img src='img/green-rabbit.png' alt='green-rabbit logo'></img>
                     <h3>To Do List: </h3>
                 </div>
-                <div>
+
+                <div className='margin-2em'>
 
                     <table className="table table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>To-Do (Click on the text when you've completed the task!)</th>
+                                <th>To-Do (Click on the text to cross it out when you've completed the task!)</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -59,7 +61,6 @@ export function ToDoList(props) {
                             {rows}
                         </tbody>
                     </table>
-
 
                 </div>
             </div>
@@ -100,9 +101,9 @@ function ToDoDataRow({ index, todo_item, firebaseToDoData, currentUser }) {
     const handleCompleteOnClick = (event) => {
         if (event.target.style.textDecoration) {
             event.target.style.removeProperty('text-decoration');
-          } else {
+        } else {
             event.target.style.setProperty('text-decoration', 'line-through');
-          }
+        }
     }
 
     return (

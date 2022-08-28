@@ -41,7 +41,7 @@ export function QuoteManage(props) {
   // convert data into rows
   const rows = quoteData.map((quote_item, index) => {
     return <QuoteDataRow key={index} quote_item={quote_item} index={index}
-      firebaseQuoteData={firebaseQuoteData} currentUser={props.currentUser}/>
+      firebaseQuoteData={firebaseQuoteData} currentUser={props.currentUser} />
   });
 
 
@@ -54,7 +54,7 @@ export function QuoteManage(props) {
             <h3>All Added Quotes</h3>
 
           </div>
-
+          <div className="margin-2em">
             <table className="table table-hover table-bordered">
               <thead>
                 <tr>
@@ -69,6 +69,7 @@ export function QuoteManage(props) {
             </table>
 
           </div>
+        </div>
       </section>
     </div>
   )

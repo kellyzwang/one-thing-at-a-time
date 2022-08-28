@@ -11,9 +11,9 @@ export function Home() {
         <h2>Focus on one thing at a time, get more done, and feel less stressed.</h2>
       </section>
 
-     <div id="rabbit-row" className="repeatimg">
-     </div>
-   </div>
+      <div id="rabbit-row" className="repeatimg">
+      </div>
+    </div>
 
   )
 }

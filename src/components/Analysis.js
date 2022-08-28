@@ -9,7 +9,7 @@ import { ToastBody } from 'reactstrap';
 
 export function Analysis(props) {
   const today = new Date();
-  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()-7);
+  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
   const [toDate, setToDate] = useState(today);
   const [fromDate, setFromDate] = useState(lastWeek);
   const [totalTime, setTotalTime] = useState("");
@@ -17,10 +17,10 @@ export function Analysis(props) {
   const [tasksData, setTasksData] = useState([{}]);
   const [chartTaskData, setChartTaskData] = useState({
     labels: tasksData.map((task) => task.date),
-      datasets: [{
-          label:"Time focused",
-          data: tasksData.map((task) => task.Actual_time),
-      }]
+    datasets: [{
+      label: "Time focused",
+      data: tasksData.map((task) => task.Actual_time),
+    }]
   })
 
   useEffect(() => {
@@ -36,10 +36,10 @@ export function Analysis(props) {
       if (newVal !== null) {
         const keys = Object.keys(newVal);
         const newObjArray = keys.map((keyString) => {
-            return newVal[keyString];
+          return newVal[keyString];
         })
         setTasksData(newObjArray);
-    }
+      }
     })
 
 
@@ -63,11 +63,11 @@ export function Analysis(props) {
 
   const handleTotalTime = (totalTimeSec) => {
     if (totalTimeSec < 3600) {
-      let totalTimeMin = totalTimeSec/60;
+      let totalTimeMin = totalTimeSec / 60;
       totalTimeMin = Math.round(totalTimeMin * 10) / 10
       setTotalTime(totalTimeMin + " minutes");
     } else {
-      let totalTimeHr = totalTimeSec/3600;
+      let totalTimeHr = totalTimeSec / 3600;
       totalTimeHr = Math.round(totalTimeHr * 10) / 10
       setTotalTime(totalTimeHr + " hours");
     }
@@ -76,7 +76,7 @@ export function Analysis(props) {
   const handleApplyFilter = () => {
     var groupedTasks = [];
     let totalTimeSec = 0;
-    tasksData.reduce(function(res, task) {
+    tasksData.reduce(function (res, task) {
       let date = new Date(task.date);
       if (date >= fromDate && date <= toDate) {
         if (!res[task.date]) {
@@ -85,11 +85,11 @@ export function Analysis(props) {
         }
         let split_actual_time = task.Actual_time.split(":");
         split_actual_time = split_actual_time.map(Number);
-        let actual_time_second = split_actual_time[0]*3600 + split_actual_time[1]*60 + split_actual_time[2];
+        let actual_time_second = split_actual_time[0] * 3600 + split_actual_time[1] * 60 + split_actual_time[2];
         totalTimeSec += actual_time_second;
         res[task.date].total_time += actual_time_second;
       }
-    return res;
+      return res;
     }, {});
 
     let orderedGroupedTasks = [];
@@ -105,9 +105,9 @@ export function Analysis(props) {
         }
       })
       if (groupedTask) {
-        orderedGroupedTasks.push({date: dateString, total_time: groupedTask.total_time});
+        orderedGroupedTasks.push({ date: dateString, total_time: groupedTask.total_time });
       } else {
-        orderedGroupedTasks.push({date: dateString, total_time: 0});
+        orderedGroupedTasks.push({ date: dateString, total_time: 0 });
       }
       date.setDate(date.getDate() + 1);
     }
@@ -115,10 +115,10 @@ export function Analysis(props) {
     setChartTaskData({
       labels: orderedGroupedTasks.map((task) => task.date),
       datasets: [{
-          label:"Time focused",
-          data: orderedGroupedTasks.map((task) => task.total_time),
-          backgroundColor:'rgba(231,203,169)',
-          borderRadius: 5,
+        label: "Time focused",
+        data: orderedGroupedTasks.map((task) => task.total_time),
+        backgroundColor: 'rgba(231,203,169)',
+        borderRadius: 5,
 
       }]
     })
@@ -128,30 +128,29 @@ export function Analysis(props) {
 
   return (
     <section id='analysis-view'>
-      {/* <div className="container">
-      </div>*/}
+
       <div className="container">
         <div className="heading-container">
-            <img src='img/light-brown-rabbit.png' alt='light-brown-rabbit logo'></img>
-            <h3>Focus Time Analysis:</h3>
-          </div>
-        <label>From: </label>
-        <input type='date' className='input' name='from' required
-          value={fromDate.toISOString().split('T')[0]} onChange={handleFromDateChange} max={toDate.toISOString().split('T')[0]}/>
-        <label>To: </label>
-        <input type='date' className="input" name='to' placeholder="" required
-          value={toDate.toISOString().split('T')[0]} onChange={handleToDateChange} max={today.toISOString().split('T')[0]}/>
+          <img src='img/light-brown-rabbit.png' alt='light-brown-rabbit logo'></img>
+          <h3>Focus Time Analysis:</h3>
+        </div>
+        <div className="label-margin">
+          <label>From: </label>
+          <input type='date' className='input' name='from' required
+            value={fromDate.toISOString().split('T')[0]} onChange={handleFromDateChange} max={toDate.toISOString().split('T')[0]} />
+          <label>To: </label>
+          <input type='date' className="input" name='to' placeholder="" required
+            value={toDate.toISOString().split('T')[0]} onChange={handleToDateChange} max={today.toISOString().split('T')[0]} />
 
-        {/*<button onClick={handleGraph}>Apply Filter</button>*/}
-        <Button color="secondary" size="sm" className="long-but" onClick={handleApplyFilter}>Apply Filter</Button>
-
+          <Button color="secondary" size="sm" className="long-but" onClick={handleApplyFilter}>Apply Filter</Button>
+        </div>
       </div>
       <div className="container">
         <div id="graphContainer">
           <p>Focus Time From {fromDate.toISOString().split('T')[0]} To {toDate.toISOString().split('T')[0]}: </p>
           <h4>{totalTime}</h4>
           <div id="graph">
-          <Bar data={chartTaskData}/>
+            <Bar data={chartTaskData} />
           </div>
         </div>
       </div>

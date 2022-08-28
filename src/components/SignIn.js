@@ -45,7 +45,7 @@ export function SignIn(props) {
 
             <div className="welcome-signin">
                 <h1>Welcome to One Thing At A Time!</h1>
-                <p>Sign in to use features like to do list, 
+                <p>Sign in to use features like to do list,
                     work time analysis, motivation, and focus on one thing at a time!</p>
             </div>
 
