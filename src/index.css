@@ -1,4 +1,6 @@
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'IM Fell Great Primer SC', serif;
 }
 
@@ -28,18 +30,22 @@ h1, h2, h3 {
 .color-nav {
     background-color: #F5F3E7;
 }
+
 .logo {
     height: 7vh;
     margin-left: 1em;
     margin-right: 0.5em;
 }
+
 .signin-margin {
     margin-right: 1em;
     white-space: nowrap;
 }
+
 .nav-link {
     text-align: center;
 }
+
 nav span {
     font-family: 'IM Fell Great Primer SC', serif;
 }
@@ -60,22 +66,22 @@ nav span {
     padding-top: 6em;
 }
 
-#home > h1 {
+#home>h1 {
     font-size: 350%;
     font-family: 'IM Fell Great Primer SC', serif;
 }
 
 
-#home > h2 {
+#home>h2 {
     font-family: 'Inter', sans-serif;
 }
 
-#home > img {
-    height:5rem;
+#home>img {
+    height: 5rem;
 }
 
 #rabbit-row {
-    bottom:0px;
+    bottom: 0px;
     position: fixed;
     padding-bottom: 6em;
 }
@@ -91,11 +97,13 @@ nav span {
 .home-to-do button {
     margin-inline-start: 3em;
 }
+
 #home .long-but {
     background-color: #ccd4bf;
     border-color: #ccd4bf;
     color: black;
-} 
+}
+
 .home-to-do {
     align-items: center;
     margin-top: 2em;
@@ -105,7 +113,7 @@ nav span {
 
 
 /*To-do view*/
-#to-do-view > .container {
+#to-do-view>.container {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -121,6 +129,7 @@ nav span {
 
 #to-do-view .new-to-do-button {
     margin-inline-start: 3em;
+    margin-left: 3em;
     margin-top: 2em;
 }
 
@@ -180,7 +189,7 @@ nav span {
     margin-right: 7%;
 }
 
-#curr-task-view form > div {
+#curr-task-view form>div {
     margin: 2em 0em;
 }
 
@@ -226,9 +235,9 @@ nav span {
 }
 
 #quote-view input {
-padding: 6px 20%;
-margin-bottom: 10px;
-margin-right: 10px;
+    padding: 6px 20%;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
 #quote-view .long-but {
@@ -238,7 +247,8 @@ margin-right: 10px;
     margin-inline: 2em;
 }
 
-#quote-view input, #quote-view p {
+#quote-view input,
+#quote-view p {
     margin: 2em;
 }
 
@@ -266,7 +276,7 @@ margin-right: 10px;
     margin: 0em 2em;
 }
 
-.heading-container img{
+.heading-container img {
     height: 70%;
 }
 
@@ -279,6 +289,7 @@ h4 {
     font-family: 'Share Tech Mono', monospace;
     color: #0B1354;
 }
+
 #graphContainer {
     margin-left: 5%;
     margin-right: 5%;
@@ -303,7 +314,7 @@ table {
 }
 
 textarea {
-    padding:1em;
+    padding: 1em;
     width: 60%;
     height: 150px;
 }
@@ -317,7 +328,22 @@ textarea {
 .signin-view {
     margin-top: 120px;
 }
+
 .welcome-signin {
     text-align: center;
     padding-bottom: 2em;
+}
+
+
+/* Responsive Design */
+@media only screen and (max-width: 480px) {
+    .home-to-do {
+
+    }
+}
+
+@media (max-height: 675px) {
+    #rabbit-row {
+        display: none;
+    }
 }
