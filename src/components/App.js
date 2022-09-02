@@ -53,6 +53,7 @@ function App() {
     // get to do data from firebase for ToDo and Focus page:
     const [ToDoData, setToDoData] = useState([{}]);
     // get toDo data from firebase!
+    
   useEffect(() => {
 
     const db = getDatabase();
@@ -101,8 +102,8 @@ function App() {
 
                     {/* public routes */}
                     <Route path="signin" element={<SignIn currentUser={currentUser} loginFunction={loginUser} />} />
-                    <Route path='*' element={<Home />} />
-                    <Route path="/" element={<Home />} />
+                    <Route path='*' element={<Home currentUser={currentUser}/>} />
+                    <Route path="/" element={<Home currentUser={currentUser}/>} />
 
                 </Route>
             </Routes>

@@ -187,16 +187,17 @@ export function Focus(props) {
   const ulRef = useRef();
   const inputRef = useRef();
   useEffect(() => {
-    inputRef.current.addEventListener('click', (e) => {
-      e.stopPropagation();
-      ulRef.current.style.display = 'flex';
-      handleTextChange(e);
-    });
     let focusPage = document.getElementById('curr-task-view');
-    focusPage.addEventListener('click', (e) => {
-
+    focusPage.addEventListener('click', (event) => {
       ulRef.current.style.display = 'none';
     });
+
+    inputRef.current.addEventListener('click', (event) => {
+      event.stopPropagation();
+      ulRef.current.style.display = 'flex';
+      handleTextChange(event);
+    });
+    
   }, [])
 
 
@@ -280,7 +281,8 @@ export function Focus(props) {
                 <label htmlFor='time'>Estimated work time (how much time you plan to spend): </label>
 
                 <DropdownList
-                  data={["0:30:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0",
+                  data={["0:5:0", "0:10:0", "0:15:0", "0:20:0", "0:30:0", 
+                    "0:45:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0",
                     "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0",
                     "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0",
                     "8:00:0"]}

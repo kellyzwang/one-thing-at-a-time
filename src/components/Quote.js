@@ -58,13 +58,18 @@ export function Quote(props) {
 
   const handleNewQuoteSubmit = (event) => {
     event.preventDefault();
+  
+    let randomInt = null;
+    if (props.quoteData.length !== 0) {
+      randomInt = Math.floor(Math.random() * props.quoteData.length);;
+    } 
 
-    if (props.quoteData === null || props.quoteData === []) {
+    if (randomInt == null) {
       setDisplayedQuote("Oh no! There's no quotes in the database, try adding a new quote you like! :)");
+    } else {
+      const randomQuote = "\"" + props.quoteData[randomInt].Quote + "\"";
+      setDisplayedQuote(randomQuote);
     }
-    const randomInt = Math.floor(Math.random() * props.quoteData.length);
-    const randomQuote = "\"" + props.quoteData[randomInt].Quote + "\"";
-    setDisplayedQuote(randomQuote);
   }
 
 

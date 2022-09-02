@@ -88,6 +88,21 @@ nav span {
     margin-inline: 2em;
 }
 
+.home-to-do button {
+    margin-inline-start: 3em;
+}
+#home .long-but {
+    background-color: #ccd4bf;
+    border-color: #ccd4bf;
+    color: black;
+} 
+.home-to-do {
+    align-items: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 50%;
+}
+
 
 /*To-do view*/
 #to-do-view > .container {
@@ -100,8 +115,13 @@ nav span {
     margin-top: 100px;
 }
 
+#to-do-view input {
+    margin-top: 2em;
+}
+
 #to-do-view .new-to-do-button {
     margin-inline-start: 3em;
+    margin-top: 2em;
 }
 
 .dateDisplayText {
@@ -150,7 +170,9 @@ nav span {
     padding-right: 2%;
 }
 
-
+#curr-task-view ul {
+    display: none;
+}
 
 #curr-task-view .input {
     border-radius: 5px;
