@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 
 export function Quote(props) {
-  // state variable to track quote entered
+  
   const [quoteEntered, setQuoteEntered] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
@@ -58,11 +58,11 @@ export function Quote(props) {
 
   const handleNewQuoteSubmit = (event) => {
     event.preventDefault();
-  
+
     let randomInt = null;
     if (props.quoteData.length !== 0) {
       randomInt = Math.floor(Math.random() * props.quoteData.length);;
-    } 
+    }
 
     if (randomInt == null) {
       setDisplayedQuote("Oh no! There's no quotes in the database, try adding a new quote you like! :)");

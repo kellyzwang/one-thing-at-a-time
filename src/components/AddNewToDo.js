@@ -30,39 +30,41 @@ export function AddNewToDo(props) {
     const handleAddNewTaskSubmit = (event) => {
         //event.preventDefault();
 
-        const db = getDatabase();
-        const newToDoData = {
-            ToDoTask: toDoTaskEntered
+        if (isDisabled === false) {
+            const db = getDatabase();
+            const newToDoData = {
+                ToDoTask: toDoTaskEntered
+            }
+            const allAddedToDoDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allAddedToDoData");
+            firebasePush(allAddedToDoDataRef, newToDoData)
+                .then(() => {
+                    setStatus({ type: 'success' });
+                })
+                .catch((error) => {
+                    setStatus({ type: 'error', error });
+                });
+
+            // set input data back to "" so it clears after submit
+            setToDoTaskEntered("");
+            setStatus(undefined);
         }
-        const allAddedToDoDataRef = ref(db, "allUserData/" + props.currentUser.uid + "/allAddedToDoData");
-        firebasePush(allAddedToDoDataRef, newToDoData)
-            .then(() => {
-                setStatus({ type: 'success' });
-            })
-            .catch((error) => {
-                setStatus({ type: 'error', error });
-            });
-
-        // set input data back to "" so it clears after submit
-        setToDoTaskEntered("");
-        setStatus(undefined);
-
     }
 
     return (
         <div>
-            <div className='input-group'>
-                <input type='text' id='task-input' className="form-control" placeholder={props.placeholderMsg} required
-                    value={toDoTaskEntered} onChange={handleAddNewTaskChange} />
-
-                <div className="input-group-append new-to-do-button">
-                    <Link to="/to-do" 
-                          onClick={event => handleAddNewTaskSubmit(event)}>
-                        <Button color="secondary" size="sm"
-                            className="long-but"  disabled={isDisabled}>Add New To-Do</Button>
-                    </Link>
-                
+            <div className='row'>
+                <div className='column'>
+                    <input type='text' id='task-input' className="form-control" placeholder={props.placeholderMsg} required
+                        value={toDoTaskEntered} onChange={handleAddNewTaskChange} />
                 </div>
+                <div className='column'>
+                    <div className='new-to-do-button right-flex'>
+                        <Link to="/to-do"
+                            onClick={event => handleAddNewTaskSubmit(event)}>
+                            <Button color="secondary" size="sm"
+                                className="long-but" disabled={isDisabled}>Add to-do</Button>
+                        </Link>
+                    </div></div>
             </div>
             <div className="error-message">{errorMessage}</div>
             <div className='center-flex'>

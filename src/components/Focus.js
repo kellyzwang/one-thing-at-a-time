@@ -2,7 +2,7 @@ import { getDatabase, ref, onValue, push as firebasePush, set as firebaseSet } f
 import React, { useState, useRef, useEffect } from 'react';
 import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
-import { Button } from 'reactstrap';
+import { TaskHistoryDataRow } from './TaskHistoryDataRow'
 
 
 export function Focus(props) {
@@ -40,7 +40,6 @@ export function Focus(props) {
   const [selectedDate, setSelectedDate] = useState();
   const [firebaseTasksData, setFirebaseTasksData] = useState([{}]);
   const [tasksData, setTasksData] = useState([{}]);
-
 
 
   useEffect(() => {
@@ -197,7 +196,7 @@ export function Focus(props) {
       ulRef.current.style.display = 'flex';
       handleTextChange(event);
     });
-    
+
   }, [])
 
 
@@ -281,7 +280,7 @@ export function Focus(props) {
                 <label htmlFor='time'>Estimated work time (how much time you plan to spend): </label>
 
                 <DropdownList
-                  data={["0:5:0", "0:10:0", "0:15:0", "0:20:0", "0:30:0", 
+                  data={["0:5:0", "0:10:0", "0:15:0", "0:20:0", "0:30:0",
                     "0:45:0", "1:00:0", "1:30:0", "2:00:0", "2:30:0",
                     "3:00:0", "3:30:0", "4:00:0", "4:30:0", "5:00:0",
                     "5:30:0", "6:00:0", "6:30:0", "7:00:0", "7:30:0",
@@ -325,9 +324,9 @@ export function Focus(props) {
                   <thead>
                     <tr>
                       <th>Task Name</th>
-                      <th>Date</th>
-                      <th>Estimated Time</th>
-                      <th>Actual Time</th>
+                      <th className='date-row'>Date</th>
+                      <th className='estTime-row'>Estimated Time</th>
+                      <th className='actTime-row'>Actual Time</th>
                       <td>Action</td>
                     </tr>
                   </thead>
@@ -342,47 +341,4 @@ export function Focus(props) {
       </section>
     </div>
   )
-}
-
-function TaskHistoryDataRow({ task, index, firebaseTaskData, currentUser }) {
-
-  const handleRemoveButton = (event) => {
-    event.preventDefault();
-    const buttonValueOftheRow = event.target.value;
-    const db = getDatabase();
-    if (firebaseTaskData !== null) {
-      const firebaseTaskDataNew = []
-      for (const [key, value] of Object.entries(firebaseTaskData)) {
-        let obj = { uniqueKey: key };
-        for (const [k, v] of Object.entries(value)) {
-          if (k === "name") {
-            obj.name = v;
-          } else if (k === "Est_Time") {
-            obj.Est_Time = v;
-          } else if (k === "Actual_time") {
-            obj.Actual_time = v;
-          }
-        }
-        firebaseTaskDataNew.push(obj);
-      }
-
-      const delUniqueKey = firebaseTaskDataNew[buttonValueOftheRow].uniqueKey;
-      const delRefString = "allUserData/" + currentUser.uid + "/allTasksData/" + delUniqueKey;
-      const delRef = ref(db, delRefString);
-      firebaseSet(delRef, null);
-    }
-  }
-  return (
-
-    <tr key={index}>
-      <td>{task.name}</td>
-      <td>{task.date}</td>
-      <td>{task.Est_Time}</td>
-      <td>{task.Actual_time}</td>
-      <td>
-        <Button outline color="danger" value={index} onClick={handleRemoveButton}>Remove</Button>
-      </td>
-    </tr>
-
-  );
 }

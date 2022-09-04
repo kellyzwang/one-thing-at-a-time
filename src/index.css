@@ -4,6 +4,8 @@ h3 {
     font-family: 'IM Fell Great Primer SC', serif;
 }
 
+
+
 .container {
     justify-content: center;
     width: 80%;
@@ -29,6 +31,10 @@ h3 {
 /* header styles */
 .color-nav {
     background-color: #F5F3E7;
+}
+
+.navbar-toggler {
+    margin-right: 20px;
 }
 
 .logo {
@@ -64,6 +70,7 @@ nav span {
     margin: 2%;
     margin-top: 120px;
     padding-top: 6em;
+    padding-bottom: 6em;
 }
 
 #home>h1 {
@@ -74,10 +81,17 @@ nav span {
 
 #home>h2 {
     font-family: 'Inter', sans-serif;
+    text-align: center;
 }
 
 #home>img {
-    height: 5rem;
+    height: 6.5rem;
+}
+
+.right-flex {
+    display: flex;
+    justify-content: right;
+    padding-top: 2em;
 }
 
 #rabbit-row {
@@ -94,9 +108,6 @@ nav span {
     margin-inline: 2em;
 }
 
-.home-to-do button {
-    margin-inline-start: 3em;
-}
 
 #home .long-but {
     background-color: #ccd4bf;
@@ -130,7 +141,6 @@ nav span {
 #to-do-view .new-to-do-button {
     margin-inline-start: 3em;
     margin-left: 3em;
-    margin-top: 2em;
 }
 
 .dateDisplayText {
@@ -140,7 +150,6 @@ nav span {
 .dateDisplay {
     background-color: #ccd4bf;
 }
-
 
 .complete-remove-but {
     border-radius: 10px;
@@ -336,12 +345,134 @@ textarea {
 
 
 /* Responsive Design */
-@media only screen and (max-width: 480px) {
-    .home-to-do {
 
+/* for screen larger than 747px */
+@media (min-width: 747px) {
+    #home .row {
+        display: flex;
+        align-items: flex-end;
+    }
+    #home .column {
+        flex: 1;
+    }
+    
+    #home .column:first-child {
+       flex-grow: 3;
+    }
+    
+    #home .right-flex {
+        justify-content: right;
+        padding: 0;
     }
 }
 
+
+
+/* for screen larger than 915px */
+@media (min-width: 915px) {
+    #to-do-view .row {
+        display: flex;
+        align-items: flex-end;
+    }
+    #to-do-view .column {
+        flex: 1;
+    }
+    #to-do-view .column:first-child {
+       flex-grow: 3;
+    }
+    #to-do-view .right-flex {
+        justify-content: right;
+        padding: 0;
+    }
+}
+
+/* for screen smaller than 558px */
+@media (max-width: 558px) {
+   #home h1 {
+        font-size: 250%;
+        margin-top: 0.5em;
+   }
+   #home h2 {
+        font-size: 150%;
+   }
+}
+
+/* for screen smaller than 398px */
+@media (max-width: 398px) {
+    #home h1 {
+        font-size: 200%;
+        margin-top: 0.5em;
+    }
+    #home h2 {
+        font-size: 120%;
+    }
+}
+
+/* for .container */
+/* for screen smaller than 575px */
+@media (max-width: 575px) {
+    #to-do-view .container {
+        width: 80%;
+    }
+    #curr-task-view .container {
+        width: 80%;
+    }
+    #curr-task-view label {
+        text-align: left;    
+    }
+    #analysis-view .container {
+        width: 80%;
+    }
+    #quote-view .container {
+        width: 80%;
+    }
+    #quote-manage-view .container {
+        width: 80%;
+    }
+}
+
+
+
+
+/* focus page table responsive design */
+/* for screen smaller than 556px */
+@media (max-width: 556px) {
+    #curr-task-view table .date-row {
+        display: none;
+    }
+}
+/* for screen smaller than 480px */
+@media (max-width: 480px) {
+    #curr-task-view table .estTime-row {
+        display: none;
+    }
+}
+/* for screen smaller than 360px */
+@media (max-width: 360px) {
+    #curr-task-view table .actTime-row {
+        display: none;
+    }
+}
+
+
+/* quote-manage-view table responsive design */
+/* for screen smaller than 460px */
+@media (max-width: 416px) {
+    #quote-manage-view table .action-row {
+        display: none;
+    }
+}
+
+/* for screen smaller than 416px */
+@media (max-width: 460px) {
+    #quote-manage-view table .id-row {
+        display: none;
+    }
+}
+
+
+/* home page rabbits */
+ /* for height smaller than 675px */
 @media (max-height: 675px) {
     #rabbit-row {
         display: none;

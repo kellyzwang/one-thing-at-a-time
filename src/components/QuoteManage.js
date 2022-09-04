@@ -58,9 +58,9 @@ export function QuoteManage(props) {
             <table className="table table-hover table-bordered">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th className='id-row'>ID</th>
                   <th>Quote</th>
-                  <th>Action</th>
+                  <th className='action-row'>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -107,9 +107,9 @@ function QuoteDataRow({ quote_item, index, firebaseQuoteData, currentUser }) {
 
   return (
     <tr>
-      <td>{index}</td>
+      <td className='id-row'>{index}</td>
       <td>{quote_item.Quote}</td>
-      <td>
+      <td className='action-row'>
         <Button outline color="danger" value={index} onClick={handleRemoveButton}>Remove</Button>
       </td>
     </tr>
