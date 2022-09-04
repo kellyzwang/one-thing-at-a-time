@@ -1,5 +1,8 @@
 # One-Thing-at-a-Time
 
+Link to our interactive web application: https://one-thing-at-a-time-d3e12.web.app/ 
+
+
 ## Work Plan
 
 ### Feature 1: To Do List
@@ -19,5 +22,4 @@ An analysis tab that visualizes your work time interactively.
 
 
 ### Notes:
-- User Login
-- Firebase Authentication
+- User Login with Firebase Authentication
